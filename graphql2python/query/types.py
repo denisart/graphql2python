@@ -426,15 +426,15 @@ class Operation(GraphQL2PythonQuery):
         description="https://graphql.org/learn/queries/#operation-name"
     )
     variables: List[Variable] = PydanticField(
-        default_factory=List[Variable],
+        default_factory=list,
         description="https://graphql.org/learn/queries/#fragments"
     )
     queries: List[Query] = PydanticField(
-        default_factory=List[Query],
+        default_factory=list,
         description="Queries for this GraphQL operation."
     )
     fragments: List[Fragment] = PydanticField(
-        default_factory=List[Fragment],
+        default_factory=list,
         description="https://graphql.org/learn/queries/#fragments"
     )
 
