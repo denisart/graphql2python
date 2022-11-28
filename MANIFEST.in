@@ -1,0 +1,1 @@
+include graphql2python/query/templates/**.jinja2
