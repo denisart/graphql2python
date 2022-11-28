@@ -27,7 +27,7 @@ jobs:
         python -m pip install -e ."[dev, test]"
     - name: Code style check
       run: |
-        python -m pylint --extension-pkg-whitelist='pydantic' graphql2python
+        python -m pylint --load-plugins pylint_pydantic --extension-pkg-whitelist='pydantic' graphql2python
         python -m mypy graphql2python
     - name: Tests
       run: |

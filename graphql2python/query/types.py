@@ -33,6 +33,7 @@ class GraphQL2PythonQuery(BaseModel):
         smart_union = True
         extra = "forbid"
         arbitrary_types_allowed = True
+        allow_reuse = True
 
     @staticmethod
     def _shift_line(text: str) -> str:
@@ -81,7 +82,7 @@ class Variable(GraphQL2PythonQuery):
     _template: Template = template_env.get_template("variable.jinja2")
 
     @validator("name")
-    def graphql_variable_name(self, name: str):
+    def graphql_variable_name(cls, name: str):
         return assert_name(name)
 
     def render(self) -> str:
@@ -154,7 +155,7 @@ class Argument(GraphQL2PythonQuery):
     _template_key_arguments: Template = template_env.get_template("argument_key_arguments.jinja2")
 
     @validator("name")
-    def graphql_argument_name(self, name: str):
+    def graphql_argument_name(cls, name: str):
         return assert_name(name)
 
     def render(self) -> str:
@@ -228,11 +229,11 @@ class Field(GraphQL2PythonQuery):
     _template: Template = template_env.get_template("field.jinja2")
 
     @validator("name")
-    def graphql_field_name(self, name: str):
+    def graphql_field_name(cls, name: str):
         return assert_name(name)
 
     @validator("alias")
-    def graphql_field_alias(self, alias: Optional[str]):
+    def graphql_field_alias(cls, alias: Optional[str]):
         if alias is not None:
             return assert_name(alias)
         return alias
@@ -263,7 +264,7 @@ class InlineFragment(GraphQL2PythonQuery):
     _template: Template = template_env.get_template("inline_fragment.jinja2")
 
     @validator("fields")
-    def graphql_inline_fragment_fields(self, fields: List[Union[str, 'Field', 'InlineFragment', 'Fragment']]):
+    def graphql_inline_fragment_fields(cls, fields: List[Union[str, 'Field', 'InlineFragment', 'Fragment']]):
         if len(fields) == 0:
             raise ValueError("empty fields for this inline fragment")
         return fields
@@ -293,11 +294,11 @@ class Fragment(GraphQL2PythonQuery):
     _template: Template = template_env.get_template("fragment.jinja2")
 
     @validator("name")
-    def graphql_fragment_name(self, name: str):
+    def graphql_fragment_name(cls, name: str):
         return assert_name(name)
 
     @validator("fields")
-    def graphql_fragment_fields(self, fields: List[Union[str, 'Field', 'InlineFragment', 'Fragment']]):
+    def graphql_fragment_fields(cls, fields: List[Union[str, 'Field', 'InlineFragment', 'Fragment']]):
         if len(fields) == 0:
             raise ValueError("empty fields for this fragment")
         return fields
@@ -353,17 +354,17 @@ class Query(GraphQL2PythonQuery):
     _template: Template = template_env.get_template("query.jinja2")
 
     @validator("name")
-    def graphql_query_name(self, name: str):
+    def graphql_query_name(cls, name: str):
         return assert_name(name)
 
     @validator("alias")
-    def graphql_alias_alias(self, alias: Optional[str]):
+    def graphql_alias_alias(cls, alias: Optional[str]):
         if alias is not None:
             return assert_name(alias)
         return alias
 
     @validator("fields")
-    def graphql_query_fields(self, fields: List[Union[str, 'Field', 'InlineFragment', 'Fragment']]):
+    def graphql_query_fields(cls, fields: List[Union[str, 'Field', 'InlineFragment', 'Fragment']]):
         if len(fields) == 0:
             raise ValueError("empty fields for this query")
         return fields
@@ -441,13 +442,13 @@ class Operation(GraphQL2PythonQuery):
     _supported_types = ["query", "mutation", "subscription"]
 
     @validator("name")
-    def graphql_operation_name(self, name: Optional[str]):
+    def graphql_operation_name(cls, name: Optional[str]):
         if name is not None:
             return assert_name(name)
         return name
 
     @validator("queries")
-    def graphql_queries(self, queries: List[Query]):
+    def graphql_queries(cls, queries: List[Query]):
         if len(queries) == 0:
             raise ValueError("empty queries list for this operation")
         return queries
