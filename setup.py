@@ -1,12 +1,17 @@
-from graphql2python import __version__
-
 from setuptools import setup
+
+from graphql2python import __author__, __email__, __license__, __maintainer__, __version__
 
 
 def do_setup():
     """Perform the package setup."""
 
-    setup_kwargs = {}
+    setup_kwargs = {
+        "author": __author__,
+        "maintainer": __maintainer__,
+        "maintainer_email": __email__,
+        "license": __license__,
+    }
 
     setup(
         version=__version__,
