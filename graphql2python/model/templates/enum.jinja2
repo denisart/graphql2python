@@ -1,0 +1,9 @@
+class {{ name }}(enum.Enum):
+{{ docstring }}
+
+{%- for v_name, v, desc, dpr in values %}
+{%- if desc is not none %}
+    {{ desc }}
+{%- endif %}
+    {{ v_name }} = {{ v }}{% if dpr is not none %}  # deprecation_reason: {{ dpr }}{% endif -%}
+{% endfor %}

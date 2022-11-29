@@ -26,6 +26,6 @@ from graphql2python.query.types import template_env
         "operation.jinja2",
     ]
 )
-def test_exist_templates(template_name: str):
+def test_exist_templates_for_query(template_name: str):
     tpl = template_env.get_template(template_name)
     assert isinstance(tpl, Template)

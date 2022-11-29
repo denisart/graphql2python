@@ -10,8 +10,8 @@ Tools for GraphQL client in python:
 The sub-packages:
 
     - `graphql2python.client`:
-    - `graphql2python.model`:
-    - `graphql2python.query`:
+    - `graphql2python.model`: The package with the pydantic datamodel generator from some GraphQL schema;
+    - `graphql2python.query`: Tools for generate GraphQL queries from python classes;
 
 """
 

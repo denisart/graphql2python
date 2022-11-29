@@ -1,0 +1,11 @@
+class {{ name }}
+{%- if interfaces|length > 0 %}(
+{%- for i in interfaces %}
+    {{ i }},
+{%- endfor %}
+){% else %}(GraphQLBaseModel){% endif %}:
+{{ docstring }}
+
+{%- for field in fields %}
+{{ field }}
+{%- endfor %}
