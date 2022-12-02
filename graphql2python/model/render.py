@@ -3,8 +3,8 @@ from keyword import iskeyword
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
-from graphql import (GraphQLEnumType, GraphQLField, GraphQLInterfaceType, GraphQLScalarType, GraphQLUnionType,
-                     is_list_type, is_non_null_type, GraphQLObjectType)
+from graphql import (GraphQLEnumType, GraphQLField, GraphQLInterfaceType, GraphQLObjectType, GraphQLScalarType,
+                     GraphQLUnionType, is_list_type, is_non_null_type)
 from jinja2 import Environment, FileSystemLoader, Template
 
 __all__ = [
@@ -25,6 +25,8 @@ class DataModelRender:
         max_line_len: maximum of line length.
         name_suffix: a suffix for invalid field name (as python object).
         each_field_optional: each field is optional.
+        add_from_dict: add from_dict method to the general class.
+        add_to_dict: add to_dict method to the general class.
 
     """
 
@@ -49,14 +51,53 @@ class DataModelRender:
         max_line_len: int = 120,
         name_suffix: str = "_",
         each_field_optional: bool = False,
+        add_from_dict: bool = False,
+        add_to_dict: bool = False,
     ):
         self.max_line_len = max_line_len
         self.name_suffix = name_suffix
         self.each_field_optional = each_field_optional
 
+        self.add_from_dict = add_from_dict
+        self.add_to_dict = add_to_dict
+
     @staticmethod
     def _line_shift(text: str, indent: int = 4) -> str:
         return ("\n" + " " * indent).join(text.split("\n"))
+
+    @staticmethod
+    def _render_general_class(add_from_dict: bool, add_to_dict: bool) -> str:
+        """Render the general class for each datamodel class.
+
+        Args:
+            add_from_dict: add from_dict method to the general class.
+            add_to_dict: add to_dict method to the general class.
+
+        """
+
+        general_class = '''class GraphQLBaseModel(BaseModel):
+    """Base Model for GraphQL object."""
+
+    class Config:
+        allow_population_by_field_name = True
+        json_encoders = {
+            # custom output conversion for datetime
+            datetime: lambda dt: dt.isoformat()
+        }
+        smart_union = True'''
+
+        if add_from_dict:
+            general_class += '''\n\n    @classmethod
+    def from_dict(cls, obj: Any):
+        """Special wrapper over .parse_obj method."""
+        return cls.parse_obj(obj)'''
+
+        if add_to_dict:
+            general_class += '''\n\n    def to_dict(self):
+        """Special wrapper over .dict method."""
+        return self.dict(by_alias=True)'''
+
+        return general_class
 
     @staticmethod
     def processing_of_line(line: str, indent: int = 0, max_line_len: int = 120) -> List[str]:
@@ -220,11 +261,7 @@ class DataModelRender:
 
         return self._template_union.render(description=description, name=name, types=types)
 
-    def render_field_type(
-        self,
-        field: GraphQLField,
-        alias: Optional[str] = None,
-    ) -> str:
+    def render_field_type(self, field: GraphQLField, alias: Optional[str] = None) -> str:
         """Render a type of some GraphQL field."""
 
         # pylint: disable=too-many-statements,too-many-branches
@@ -391,11 +428,7 @@ class DataModelRender:
 
         return result
 
-    def render_interface(
-        self,
-        obj: GraphQLInterfaceType,
-        field_aliases: Dict[str, Dict[str, str]],
-    ) -> str:
+    def render_interface(self, obj: GraphQLInterfaceType, field_aliases: Dict[str, Dict[str, str]]) -> str:
         """Render an interface with `interface.jinja2` template.
 
         Args:
@@ -473,11 +506,7 @@ class DataModelRender:
                 fields=fields,
         )
 
-    def render_object(
-        self,
-        obj: GraphQLObjectType,
-        field_aliases: Dict[str, Dict[str, str]],
-    ) -> str:
+    def render_object(self, obj: GraphQLObjectType, field_aliases: Dict[str, Dict[str, str]]) -> str:
         """Render an object with `object.jinja2` template.
 
         Args:

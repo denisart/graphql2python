@@ -1,4 +1,4 @@
-from graphql import GraphQLField, GraphQLInterfaceType, GraphQLNonNull, GraphQLScalarType, GraphQLObjectType
+from graphql import GraphQLField, GraphQLInterfaceType, GraphQLNonNull, GraphQLObjectType, GraphQLScalarType
 
 from graphql2python.model.render import DataModelRender
 
