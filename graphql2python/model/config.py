@@ -1,15 +1,31 @@
-from pydantic import BaseModel, Field, validator
 from pathlib import Path
+from typing import Dict, Optional
+
+from pydantic import BaseModel, Field, validator
 
 __all__ = [
+    "FieldSetting",
     "GraphQL2PythonModelOptions",
     "GraphQL2PythonModelConfig",
 ]
 
 
+class FieldSetting(BaseModel):
+    alias: Optional[str] = Field(default=None)
+    new_name: Optional[str] = Field(default=None)
+
+
 class GraphQL2PythonModelOptions(BaseModel):
     """Data-model render options."""
 
+    scalar_pytypes: Dict[str, str] = Field(
+        description="Python types for custom GraphQL scalars.",
+        default_factory=dict
+    )
+    fields_setting: Dict[str, Dict[str, FieldSetting]] = Field(
+        description="Settings for interfaces or objects fields.",
+        default_factory=dict
+    )
     max_line_len: int = Field(default=120, description="Maximum of line length of output python file.")
     name_suffix: str = Field(default="_", description="A suffix for invalid field name (as python object name).")
     each_field_optional: bool = Field(

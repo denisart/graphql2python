@@ -1,7 +1,9 @@
-from graphql2python.model.config import GraphQL2PythonModelConfig
-import pytest
 import os
 from pathlib import Path
+
+import pytest
+
+from graphql2python.model.config import GraphQL2PythonModelConfig
 
 static_folder = Path(os.path.join(os.path.dirname(__file__), "static/"))
 
