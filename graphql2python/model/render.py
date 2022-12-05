@@ -7,6 +7,8 @@ from graphql import (GraphQLEnumType, GraphQLField, GraphQLInterfaceType, GraphQ
                      GraphQLUnionType, is_list_type, is_non_null_type)
 from jinja2 import Environment, FileSystemLoader, Template
 
+from graphql2python.model.config import FieldSetting
+
 __all__ = [
     "DataModelRender",
 ]
@@ -25,8 +27,6 @@ class DataModelRender:
         max_line_len: maximum of line length.
         name_suffix: a suffix for invalid field name (as python object).
         each_field_optional: each field is optional.
-        add_from_dict: add from_dict method to the general class.
-        add_to_dict: add to_dict method to the general class.
 
     """
 
@@ -37,8 +37,6 @@ class DataModelRender:
     _template_union: Template = template_env.get_template("union.jinja2")
     _template_interface: Template = template_env.get_template("interface.jinja2")
     _template_object: Template = template_env.get_template("object.jinja2")
-
-    DEFAULT_PYTYPE_FOR_SCALAR: str = "str"
 
     SCALAR_DEFAULT_DESCRIPTION = "A Scalar type\nSee https://graphql.org/learn/schema/#scalar-types"
     ENUM_DEFAULT_DESCRIPTION = "An Enum type\nSee https://graphql.org/learn/schema/#enumeration-types"
@@ -51,22 +49,17 @@ class DataModelRender:
         max_line_len: int = 120,
         name_suffix: str = "_",
         each_field_optional: bool = False,
-        add_from_dict: bool = False,
-        add_to_dict: bool = False,
     ):
         self.max_line_len = max_line_len
         self.name_suffix = name_suffix
         self.each_field_optional = each_field_optional
-
-        self.add_from_dict = add_from_dict
-        self.add_to_dict = add_to_dict
 
     @staticmethod
     def _line_shift(text: str, indent: int = 4) -> str:
         return ("\n" + " " * indent).join(text.split("\n"))
 
     @staticmethod
-    def _render_general_class(add_from_dict: bool, add_to_dict: bool) -> str:
+    def render_general_class(add_from_dict: bool, add_to_dict: bool) -> str:
         """Render the general class for each datamodel class.
 
         Args:
@@ -428,22 +421,12 @@ class DataModelRender:
 
         return result
 
-    def render_interface(self, obj: GraphQLInterfaceType, field_aliases: Dict[str, Dict[str, str]]) -> str:
+    def render_interface(self, obj: GraphQLInterfaceType, field_aliases: Dict[str, FieldSetting]) -> str:
         """Render an interface with `interface.jinja2` template.
 
         Args:
             obj: interface object for render.
-            field_aliases: aliases for the interface field in
-                the following format:
-                    Dict[
-                        object_name,
-                        {
-                            field_name: {
-                                "alias": Optional[str],
-                                "new_name": Optional[str],
-                            }
-                        }
-                    ]
+            field_aliases: aliases for the interface field.
 
         """
 
@@ -487,8 +470,8 @@ class DataModelRender:
             new_name = None
 
             if f_name in field_aliases:
-                alias = field_aliases[f_name].get('alias', None)
-                new_name = field_aliases[f_name].get('new_name', None)
+                alias = field_aliases[f_name].alias
+                new_name = field_aliases[f_name].new_name
 
             fields.append(
                 self.render_field(
