@@ -34,9 +34,9 @@ def generate(config: str):
     yaml_config["schema"] = (cwd_path / Path(yaml_config["schema"])).resolve()
     yaml_config["output"] = (cwd_path / Path(yaml_config["output"])).resolve()
 
-    config = GraphQL2PythonModelConfig.parse_obj(yaml_config)
+    graphql2python_config = GraphQL2PythonModelConfig.parse_obj(yaml_config)
 
-    generator = Generator(config)
+    generator = Generator(graphql2python_config)
     generator.generate()
 
 
