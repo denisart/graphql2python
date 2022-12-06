@@ -225,7 +225,7 @@ class Generator:
         # TODO: add custom imports
         result_str += """import enum
 from datetime import date, datetime
-from typing import Any, List, Literal, Optional, Union
+from typing import Any, List, Literal, Optional, TypeVar, Union
 
 from pydantic import BaseModel, Field"""
 

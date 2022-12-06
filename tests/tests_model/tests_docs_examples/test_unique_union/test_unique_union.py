@@ -5,7 +5,7 @@ from graphql2python.model.config import GraphQL2PythonModelConfig
 from graphql2python.model.generate import Generator
 
 
-def test_custom_scalar():
+def test_unique_union():
     schema_path = Path(os.path.join(os.path.dirname(__file__), "input.graphql"))
     output_path = Path(os.path.join(os.path.dirname(__file__), "output.py"))
 
@@ -24,7 +24,7 @@ def test_custom_scalar():
 
 import enum
 from datetime import date, datetime
-from typing import Any, List, Literal, Optional, Union
+from typing import Any, List, Literal, Optional, TypeVar, Union
 
 from pydantic import BaseModel, Field
 
@@ -32,19 +32,17 @@ __all__ = [
     "GraphQLBaseModel",
     # scalars
     "Boolean",
-    "Float",
     "ID",
     "Int",
     "String",
     # enums
     "Episode",
     # unions
+    "SearchResult",
     # interfaces
     "Character",
     # objects
-    "Droid",
     "Human",
-    "Starship",
 ]
 
 
@@ -62,11 +60,6 @@ class GraphQLBaseModel(BaseModel):
 
 # The `Boolean` scalar type represents `true` or `false`.
 Boolean = str
-
-
-# The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE
-# 754](https://en.wikipedia.org/wiki/IEEE_floating_point).
-Float = str
 
 
 # The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID
@@ -95,6 +88,11 @@ class Episode(enum.Enum):
     NEWHOPE = "NEWHOPE"
 
 
+# A Union type
+# See https://graphql.org/learn/schema/#union-types
+SearchResult = TypeVar('SearchResult', bound='Human')
+
+
 class Character(GraphQLBaseModel):
     """
     An Interface type
@@ -106,16 +104,6 @@ class Character(GraphQLBaseModel):
     friends: Optional[List[Optional['Character']]] = Field(default_factory=list)
 
 
-class Droid(
-    Character,
-):
-    """
-    An Object type
-    See https://graphql.org/learn/schema/#object-types-and-fields
-    """
-    primaryFunction: Optional['String'] = Field(default=None)
-
-
 class Human(
     Character,
 ):
@@ -123,16 +111,5 @@ class Human(
     An Object type
     See https://graphql.org/learn/schema/#object-types-and-fields
     """
-    starships: Optional[List[Optional['Starship']]] = Field(default_factory=list)
     totalCredits: Optional['Int'] = Field(default=None)
-
-
-class Starship(GraphQLBaseModel):
-    """
-    An Object type
-    See https://graphql.org/learn/schema/#object-types-and-fields
-    """
-    id: 'ID'
-    name: 'String'
-    length: Optional['Float'] = Field(default=None)
 '''
