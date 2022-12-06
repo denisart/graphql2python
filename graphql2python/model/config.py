@@ -46,21 +46,21 @@ class GraphQL2PythonModelConfig(BaseModel):
     )
 
     @validator("graphql_schema")
-    def validation_graphql_schema_file(cls, v: Path):
-        if not v.exists():
-            raise ValueError(f"The file {v} is not exist.")
+    def validation_graphql_schema_file(cls, schema_path: Path):
+        if not schema_path.exists():
+            raise ValueError(f"The file {schema_path} is not exist.")
 
-        if not v.is_file():
-            raise ValueError(f"The input schema is not file.")
+        if not schema_path.is_file():
+            raise ValueError("The input schema is not file.")
 
-        if v.suffix != ".graphql":
-            raise ValueError(f"The input file must have the suffix is .graphql")
+        if schema_path.suffix != ".graphql":
+            raise ValueError("The input file must have the suffix is .graphql")
 
-        return v
+        return schema_path
 
     @validator("output")
-    def validation_output_py_file(cls, v: Path):
-        if v.suffix != ".py":
-            raise ValueError(f"The output file must have the suffix is .py")
+    def validation_output_py_file(cls, output_path: Path):
+        if output_path.suffix != ".py":
+            raise ValueError("The output file must have the suffix is .py")
 
-        return v
+        return output_path

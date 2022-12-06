@@ -17,6 +17,7 @@ resolver = TypeResolvers()
 
 
 class SupportTypes(Enum):
+    # pylint: disable=invalid-name
     GraphQLScalarType = "GraphQLScalarType"
     GraphQLObjectType = "GraphQLObjectType"
     GraphQLInterfaceType = "GraphQLInterfaceType"
@@ -36,6 +37,8 @@ TYPES_MAPPER: Dict[TypeKind, SupportTypes] = {
 
 
 class GraphQLSchemaTypeMap:
+    # pylint: disable=too-few-public-methods
+
     # GraphQL type --> list of object names
     type_map: Dict[SupportTypes, List[str]]
 
@@ -73,8 +76,8 @@ class GraphQLSchemaTypeMap:
                 for inter in schema.get_type(object_name).interfaces  # type: ignore
             }
 
-        ts = TopologicalSorter(graph)
-        self.type_map[SupportTypes.GraphQLInterfaceType] = list(ts.static_order())
+        t_sort = TopologicalSorter(graph)
+        self.type_map[SupportTypes.GraphQLInterfaceType] = list(t_sort.static_order())
 
 
 class Generator:
@@ -95,8 +98,8 @@ class Generator:
     def __init__(self, config: GraphQL2PythonModelConfig):
         self.config = config
 
-        with config.graphql_schema.open("r", encoding="utf8") as f:
-            schema_str = f.read()
+        with config.graphql_schema.open("r", encoding="utf8") as schema_file:
+            schema_str = schema_file.read()
 
         self.schema = build_schema(schema_str)
         self.schema = lexicographic_sort_schema(self.schema)
@@ -240,5 +243,5 @@ from pydantic import BaseModel, Field"""
         result_str += self.objects_str()
         result_str += "\n"
 
-        with self.config.output.open("w", encoding="utf-8") as f:
-            f.write(result_str)
+        with self.config.output.open("w", encoding="utf-8") as output_file:
+            output_file.write(result_str)
