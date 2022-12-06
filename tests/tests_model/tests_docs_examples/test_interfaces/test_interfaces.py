@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 
-from graphql2python.model.config import GraphQL2PythonModelConfig, GraphQL2PythonModelOptions
+from graphql2python.model.config import GraphQL2PythonModelConfig
 from graphql2python.model.generate import Generator
 
 
@@ -9,12 +9,7 @@ def test_custom_scalar():
     schema_path = Path(os.path.join(os.path.dirname(__file__), "input.graphql"))
     output_path = Path(os.path.join(os.path.dirname(__file__), "output.py"))
 
-    config = GraphQL2PythonModelConfig(
-        schema=schema_path, output=output_path,
-        # options=GraphQL2PythonModelOptions(
-        #     scalar_pytypes={"Date": "date"}
-        # )
-    )
+    config = GraphQL2PythonModelConfig(schema=schema_path, output=output_path)
 
     generator = Generator(config)
     generator.generate()
@@ -28,8 +23,8 @@ def test_custom_scalar():
 # mypy: ignore-errors
 
 import enum
+import typing as _t
 from datetime import date, datetime
-from typing import Any, List, Literal, Optional, Union
 
 from pydantic import BaseModel, Field
 
@@ -105,10 +100,10 @@ class Character(GraphQLBaseModel):
     An Interface type
     See https://graphql.org/learn/schema/#interfaces
     """
-    appearsIn: List[Optional['Episode']]
+    appearsIn: _t.List[_t.Optional['Episode']]
     id: 'ID'
     name: 'String'
-    friends: Optional[List[Optional['Character']]] = Field(default_factory=list)
+    friends: _t.Optional[_t.List[_t.Optional['Character']]] = Field(default_factory=list)
 
 
 class Droid(
@@ -118,7 +113,7 @@ class Droid(
     An Object type
     See https://graphql.org/learn/schema/#object-types-and-fields
     """
-    primaryFunction: Optional['String'] = Field(default=None)
+    primaryFunction: _t.Optional['String'] = Field(default=None)
 
 
 class Human(
@@ -128,8 +123,8 @@ class Human(
     An Object type
     See https://graphql.org/learn/schema/#object-types-and-fields
     """
-    starships: Optional[List[Optional['Starship']]] = Field(default_factory=list)
-    totalCredits: Optional['Int'] = Field(default=None)
+    starships: _t.Optional[_t.List[_t.Optional['Starship']]] = Field(default_factory=list)
+    totalCredits: _t.Optional['Int'] = Field(default=None)
 
 
 class Starship(GraphQLBaseModel):
@@ -139,5 +134,5 @@ class Starship(GraphQLBaseModel):
     """
     id: 'ID'
     name: 'String'
-    length: Optional['Float'] = Field(default=None)
+    length: _t.Optional['Float'] = Field(default=None)
 '''

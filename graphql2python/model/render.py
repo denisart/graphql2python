@@ -334,7 +334,7 @@ class DataModelRender:
                 field_options = f' = Field({def_value}{alias_field})'
 
             if res_list[0] == 'OS':
-                result += f"Optional['{final_name}']"
+                result += f"_t.Optional['{final_name}']"
             elif res_list[0] == 'S':
                 result += f"'{final_name}'"
             else:
@@ -359,15 +359,15 @@ class DataModelRender:
             end_brace = 0
             for key_id in range(len(res_list) - 1):
                 if res_list[key_id] == 'OL':
-                    result += 'Optional[List['
+                    result += '_t.Optional[_t.List['
                     end_brace += 2
 
                 else:
-                    result += 'List['
+                    result += '_t.List['
                     end_brace += 1
 
             if res_list[-1] == 'OS':
-                result += f"Optional['{final_name}']"
+                result += f"_t.Optional['{final_name}']"
             else:
                 result += f"'{final_name}'"
 
