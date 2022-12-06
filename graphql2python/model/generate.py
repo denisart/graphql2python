@@ -88,6 +88,8 @@ class Generator:
 
     """
 
+    # pylint: disable=too-few-public-methods
+
     schema: GraphQLSchema
     type_map: GraphQLSchemaTypeMap
     config: GraphQL2PythonModelConfig
