@@ -32,10 +32,10 @@ def test_render_object_simple():
     """
     my description
     """
-    f1: Optional['String'] = Field(default=None, alias='f1_alias')
-    f2: Optional['String'] = Field(default=None)
-    f3_new: Optional['String'] = Field(default=None)
-    from_: Optional['String'] = Field(default=None)'''
+    f1: _t.Optional['String'] = Field(default=None, alias='f1_alias')
+    f2: _t.Optional['String'] = Field(default=None)
+    f3_new: _t.Optional['String'] = Field(default=None)
+    from_: _t.Optional['String'] = Field(default=None)'''
 
     assert render.render_object(obj, field_aliases) == result
 
@@ -68,9 +68,9 @@ def test_render_object_not_all_optional():
     my description
     """
     f2: 'String'
-    f1: Optional['String'] = Field(default=None, alias='f1_alias')
-    f3_new: Optional['String'] = Field(default=None)
-    from_: Optional['String'] = Field(default=None)'''
+    f1: _t.Optional['String'] = Field(default=None, alias='f1_alias')
+    f3_new: _t.Optional['String'] = Field(default=None)
+    from_: _t.Optional['String'] = Field(default=None)'''
 
     assert render.render_object(obj, field_aliases) == result
 
@@ -102,10 +102,10 @@ def test_render_object_all_optional():
     """
     my description
     """
-    f1: Optional['String'] = Field(default=None, alias='f1_alias')
-    f2: Optional['String'] = Field(default=None)
-    f3_new: Optional['String'] = Field(default=None)
-    from_: Optional['String'] = Field(default=None)'''
+    f1: _t.Optional['String'] = Field(default=None, alias='f1_alias')
+    f2: _t.Optional['String'] = Field(default=None)
+    f3_new: _t.Optional['String'] = Field(default=None)
+    from_: _t.Optional['String'] = Field(default=None)'''
 
     render_optional = DataModelRender(each_field_optional=True)
     assert render_optional.render_object(obj, field_aliases) == result
@@ -135,6 +135,6 @@ def test_render_object_inherit():
     An Object type
     See https://graphql.org/learn/schema/#object-types-and-fields
     """
-    f1: Optional['String'] = Field(default=None)'''
+    f1: _t.Optional['String'] = Field(default=None)'''
 
     assert render.render_object(obj, {}) == result

@@ -23,8 +23,8 @@ def test_unique_union():
 # mypy: ignore-errors
 
 import enum
+import typing as _t
 from datetime import date, datetime
-from typing import Any, List, Literal, Optional, TypeVar, Union
 
 from pydantic import BaseModel, Field
 
@@ -90,7 +90,7 @@ class Episode(enum.Enum):
 
 # A Union type
 # See https://graphql.org/learn/schema/#union-types
-SearchResult = TypeVar('SearchResult', bound='Human')
+SearchResult = _t.TypeVar('SearchResult', bound='Human')
 
 
 class Character(GraphQLBaseModel):
@@ -98,10 +98,10 @@ class Character(GraphQLBaseModel):
     An Interface type
     See https://graphql.org/learn/schema/#interfaces
     """
-    appearsIn: List[Optional['Episode']]
+    appearsIn: _t.List[_t.Optional['Episode']]
     id: 'ID'
     name: 'String'
-    friends: Optional[List[Optional['Character']]] = Field(default_factory=list)
+    friends: _t.Optional[_t.List[_t.Optional['Character']]] = Field(default_factory=list)
 
 
 class Human(
@@ -111,5 +111,5 @@ class Human(
     An Object type
     See https://graphql.org/learn/schema/#object-types-and-fields
     """
-    totalCredits: Optional['Int'] = Field(default=None)
+    totalCredits: _t.Optional['Int'] = Field(default=None)
 '''

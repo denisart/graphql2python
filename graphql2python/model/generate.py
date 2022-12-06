@@ -224,8 +224,8 @@ class Generator:
         # TODO: add only used imports
         # TODO: add custom imports
         result_str += """import enum
+import typing as _t
 from datetime import date, datetime
-from typing import Any, List, Literal, Optional, TypeVar, Union
 
 from pydantic import BaseModel, Field"""
 

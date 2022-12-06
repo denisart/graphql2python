@@ -4,8 +4,8 @@
 # mypy: ignore-errors
 
 import enum
+import typing as _t
 from datetime import date, datetime
-from typing import Any, List, Literal, Optional, Union
 
 from pydantic import BaseModel, Field
 
@@ -69,4 +69,4 @@ class Starship(GraphQLBaseModel):
     """
     id: 'ID'
     name: 'String'
-    length: Optional['Float'] = Field(default=None)
+    length: _t.Optional['Float'] = Field(default=None)
