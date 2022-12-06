@@ -44,9 +44,9 @@ For generation model we create the config file
 
 and run the command
 
-.. code-block:: bash
+.. code-block:: console
 
-  graphql2python render --config ./graphql2python.yaml
+  (.venv) $ graphql2python render --config ./graphql2python.yaml
 
 where
 
