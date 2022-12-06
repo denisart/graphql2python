@@ -81,7 +81,7 @@ class DataModelRender:
 
         if add_from_dict:
             general_class += '''\n\n    @classmethod
-    def from_dict(cls, obj: Any):
+    def from_dict(cls, obj: _t.Any):
         """Special wrapper over .parse_obj method."""
         return cls.parse_obj(obj)'''
 
