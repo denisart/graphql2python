@@ -1,6 +1,7 @@
 from graphql import GraphQLField, GraphQLInterfaceType, GraphQLNonNull, GraphQLScalarType
 
 from graphql2python.model.render import DataModelRender
+from graphql2python.model.config import FieldSetting
 
 render = DataModelRender()
 
@@ -9,12 +10,8 @@ def test_render_interface_simple():
     """Test for render of simple GraphQL interface with aliases."""
 
     field_aliases = {
-        'f1': {
-            'alias': 'f1_alias'
-        },
-        'f3': {
-            'new_name': 'f3_new'
-        }
+        'f1': FieldSetting(alias='f1_alias'),
+        'f3': FieldSetting(new_name='f3_new')
     }
 
     obj = GraphQLInterfaceType(
@@ -44,12 +41,8 @@ def test_render_interface_not_all_optional():
     """Test for render of simple GraphQL interface with optional_fields=False."""
 
     field_aliases = {
-        'f1': {
-            'alias': 'f1_alias'
-        },
-        'f3': {
-            'new_name': 'f3_new'
-        }
+        'f1': FieldSetting(alias='f1_alias'),
+        'f3': FieldSetting(new_name='f3_new')
     }
 
     obj = GraphQLInterfaceType(
@@ -79,12 +72,8 @@ def test_render_interface_all_optional():
     """Test for render of simple GraphQL interface with optional_fields=True."""
 
     field_aliases = {
-        'f1': {
-            'alias': 'f1_alias'
-        },
-        'f3': {
-            'new_name': 'f3_new'
-        }
+        'f1': FieldSetting(alias='f1_alias'),
+        'f3': FieldSetting(new_name='f3_new'),
     }
 
     obj = GraphQLInterfaceType(
