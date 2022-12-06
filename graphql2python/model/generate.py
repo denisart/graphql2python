@@ -9,7 +9,7 @@ from graphql2python.model.render import DataModelRender
 from graphql2python.utils.graphlib import TopologicalSorter
 
 __all__ = [
-    "generate",
+    "Generator",
 ]
 
 
@@ -221,8 +221,8 @@ class Generator:
         # TODO: add only used imports
         # TODO: add custom imports
         result_str += """import enum
-from typing import Any, List, Literal, Union, Optional
 from datetime import date, datetime
+from typing import Any, List, Literal, Optional, Union
 
 from pydantic import BaseModel, Field"""
 

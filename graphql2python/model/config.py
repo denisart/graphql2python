@@ -60,9 +60,6 @@ class GraphQL2PythonModelConfig(BaseModel):
 
     @validator("output")
     def validation_output_py_file(cls, v: Path):
-        if v.exists():
-            raise ValueError(f"The file {v} is exist.")
-
         if v.suffix != ".py":
             raise ValueError(f"The output file must have the suffix is .py")
 
