@@ -36,7 +36,7 @@ class GraphQL2PythonQuery(BaseModel):
         allow_reuse = True
 
     @staticmethod
-    def _shift_line(text: str) -> str:
+    def _line_shift(text: str) -> str:
         return "\n  ".join(text.split("\n"))
 
     def _render_field(self, field: Union[str, 'Field', 'InlineFragment', 'Fragment']) -> str:
@@ -46,7 +46,7 @@ class GraphQL2PythonQuery(BaseModel):
         if isinstance(field, Fragment):
             return f"...{field.name}"
 
-        return self._shift_line(field.render())
+        return self._line_shift(field.render())
 
     def render(self) -> str:
         raise NotImplementedError
@@ -165,7 +165,7 @@ class Argument(GraphQL2PythonQuery):
         if isinstance(self.value, Argument):
             return self._template_key_argument.render(
                 name=self.name,
-                argument=self._shift_line(self.value.render())
+                argument=self._line_shift(self.value.render())
             )
 
         if isinstance(self.value, Variable):
@@ -176,7 +176,7 @@ class Argument(GraphQL2PythonQuery):
 
         return self._template_key_arguments.render(
             name=self.name,
-            arguments=[self._shift_line(argument.render()) for argument in self.value]
+            arguments=[self._line_shift(argument.render()) for argument in self.value]
         )
 
 
@@ -242,7 +242,7 @@ class Field(GraphQL2PythonQuery):
         return self._template.render(
             name=self.name,
             alias=self.alias,
-            arguments=[self._shift_line(argument.render()) for argument in self.arguments],
+            arguments=[self._line_shift(argument.render()) for argument in self.arguments],
             fields=[self._render_field(field) for field in self.fields],
             typename=self.typename
         )
@@ -272,7 +272,7 @@ class InlineFragment(GraphQL2PythonQuery):
     def render(self) -> str:
         return self._template.render(
             type=self.type,
-            arguments=[self._shift_line(argument.render()) for argument in self.arguments],
+            arguments=[self._line_shift(argument.render()) for argument in self.arguments],
             fields=[self._render_field(field) for field in self.fields],
             typename=self.typename
         )
@@ -373,7 +373,7 @@ class Query(GraphQL2PythonQuery):
         return self._template.render(
             name=self.name,
             alias=self.alias,
-            arguments=[self._shift_line(argument.render()) for argument in self.arguments],
+            arguments=[self._line_shift(argument.render()) for argument in self.arguments],
             typename=self.typename,
             fields=[self._render_field(field) for field in self.fields]
         )
@@ -457,8 +457,8 @@ class Operation(GraphQL2PythonQuery):
         return self._template.render(
             type=self.type,
             name=self.name,
-            variables=[self._shift_line(variable.render()) for variable in self.variables],
-            queries=[self._shift_line(query.render()) for query in self.queries],
+            variables=[self._line_shift(variable.render()) for variable in self.variables],
+            queries=[self._line_shift(query.render()) for query in self.queries],
             fragments=[fragment.render() for fragment in self.fragments],
         )
 
