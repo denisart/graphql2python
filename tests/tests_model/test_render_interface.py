@@ -1,7 +1,7 @@
 from graphql import GraphQLField, GraphQLInterfaceType, GraphQLNonNull, GraphQLScalarType
 
-from graphql2python.model.render import DataModelRender
 from graphql2python.model.config import FieldSetting
+from graphql2python.model.render import DataModelRender
 
 render = DataModelRender()
 
