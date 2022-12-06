@@ -70,3 +70,6 @@ class Starship(GraphQLBaseModel):
     id: 'ID'
     name: 'String'
     length: _t.Optional['Float'] = Field(default=None)
+
+
+Starship.update_forward_refs()

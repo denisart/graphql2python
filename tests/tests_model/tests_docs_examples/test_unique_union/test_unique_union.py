@@ -112,4 +112,8 @@ class Human(
     See https://graphql.org/learn/schema/#object-types-and-fields
     """
     totalCredits: _t.Optional['Int'] = Field(default=None)
+
+
+Character.update_forward_refs()
+Human.update_forward_refs()
 '''

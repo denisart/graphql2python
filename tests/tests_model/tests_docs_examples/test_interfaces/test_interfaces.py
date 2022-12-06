@@ -135,4 +135,10 @@ class Starship(GraphQLBaseModel):
     id: 'ID'
     name: 'String'
     length: _t.Optional['Float'] = Field(default=None)
+
+
+Character.update_forward_refs()
+Droid.update_forward_refs()
+Human.update_forward_refs()
+Starship.update_forward_refs()
 '''
