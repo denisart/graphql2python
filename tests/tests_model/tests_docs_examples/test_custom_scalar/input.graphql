@@ -1,0 +1,7 @@
+type Starship {
+  id: ID!
+  name: String!
+  length: Float
+}
+
+scalar Date
