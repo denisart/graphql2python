@@ -371,3 +371,44 @@ Example from https://graphql.org/learn/queries/#inline-fragments
   #     }
   #   }
   # }
+
+Meta fields
+-----------
+
+Type name to fields
+
+.. code-block:: python
+
+  from graphql2python.query import Argument, Operation, Query, InlineFragment
+
+  search = Query(
+      name="search",
+      arguments=[Argument(name="text", value='"an"')],
+      typename=True,
+      fields=[
+          InlineFragment(type="Droid", fields=["name"]),
+          InlineFragment(type="Human", fields=["name"]),
+          InlineFragment(type="Starship", fields=["name"]),
+      ]
+  )
+
+  operation = Operation(
+      type="query",
+      queries=[search],
+  )
+  # query {
+  #   search(
+  #     text: "an"
+  #   ) {
+  #     __typename
+  #     ... on Droid {
+  #       name
+  #     }
+  #     ... on Human {
+  #       name
+  #     }
+  #     ... on Starship {
+  #       name
+  #     }
+  #   }
+  # }

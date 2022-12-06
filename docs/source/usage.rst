@@ -15,4 +15,5 @@ Usage examples
 
 .. toctree::
 
-   query
+  query
+  model
