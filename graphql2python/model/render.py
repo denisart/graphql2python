@@ -81,7 +81,7 @@ class DataModelRender:
 
         if add_from_dict:
             general_class += '''\n\n    @classmethod
-    def from_dict(cls, obj: Any):
+    def from_dict(cls, obj: _t.Any):
         """Special wrapper over .parse_obj method."""
         return cls.parse_obj(obj)'''
 
@@ -489,7 +489,7 @@ class DataModelRender:
                 fields=fields,
         )
 
-    def render_object(self, obj: GraphQLObjectType, field_aliases: Dict[str, Dict[str, str]]) -> str:
+    def render_object(self, obj: GraphQLObjectType, field_aliases: Dict[str, FieldSetting]) -> str:
         """Render an object with `object.jinja2` template.
 
         Args:
@@ -547,8 +547,8 @@ class DataModelRender:
             new_name = None
 
             if f_name in field_aliases:
-                alias = field_aliases[f_name].get('alias', None)
-                new_name = field_aliases[f_name].get('new_name', None)
+                alias = field_aliases[f_name].alias
+                new_name = field_aliases[f_name].new_name
 
             fields.append(
                 self.render_field(
