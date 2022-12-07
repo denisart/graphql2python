@@ -23,3 +23,20 @@ pip install graphql2python
 ## Documentation
 
 See documentation in `docs/`.
+
+## Simple example
+
+A simple example for data-model generation.
+
+Create a file `graphql2python.yaml`:
+
+```yaml
+schema: ./schema.graphql
+output: ./model.py
+```
+
+and run the following command
+
+```bash
+graphql2python render --config ./graphql2python.yaml
+```
