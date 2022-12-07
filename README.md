@@ -19,3 +19,7 @@ Install using
 ```bash
 pip install graphql2python
 ```
+
+## Documentation
+
+See documentation in `docs/`.
