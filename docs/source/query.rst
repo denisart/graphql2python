@@ -96,6 +96,8 @@ you can using **graphql2python.query.Argument**:
       ]
   )
   operation = Operation(type="query", queries=[human])
+
+  print(operation.render())
   # query {
   #   human(
   #     id: "1000"
@@ -131,6 +133,7 @@ Aliases
   )
 
   operation = Operation(type="query", queries=[empireHero, jediHero])
+  print(operation.render())
   # query {
   #   empireHero: hero(
   #     episode: EMPIRE
@@ -180,6 +183,7 @@ Fragment is the power of GraphQL. Use **graphql2python.query.Fragment** with
       queries=[leftComparison, rightComparison],
       fragments=[comparisonFields]
   )
+  print(operation.render())
   # query {
   #   leftComparison: hero(
   #     episode: EMPIRE
@@ -255,6 +259,7 @@ Variables can also be used in fragments
       fragments=[comparisonFields],
       variables=[var_first]
   )
+  print(operation.render())
   # query HeroComparison(
   #   $first: Int = 3
   # ) {
@@ -305,10 +310,63 @@ HeroNameAndFriends as operation name:
       name="HeroNameAndFriends",
       queries=[hero],
   )
+  print(operation.render())
   # query HeroNameAndFriends {
   #   hero {
   #     name
   #     friends {
+  #       name
+  #     }
+  #   }
+  # }
+
+Directives
+----------
+
+If you use directives in your queries then using **graphql2python.query.Directive**
+
+.. code-block:: python
+
+  from graphql2python.query import Argument, Directive, Operation, Query, Field, Variable
+
+  var_episode = Variable(name="episode", type="Episode")
+  var_withFriends = Variable(name="withFriends", type="Boolean!")
+
+  hero = Query(
+      name="hero",
+      arguments=[Argument(name="episode", value=var_episode))]
+      fields=[
+          "name",
+          Field(
+              name="friends",
+              directives=[
+                  Directive(name="include", arguments=[
+                      Argument(name="if", value=var_withFriends)
+                  ])
+              ]
+              fields=["name"]
+          )
+      ]
+  )
+
+  operation = Operation(
+      type="query",
+      name="Hero",
+      queries=[hero],
+      variables=[var_episode, var_withFriends]
+  )
+  print(operation.render())
+  # query Hero(
+  #   $episode: Episode
+  #   $withFriends: Boolean!
+  # ) {
+  #   hero(
+  #     episode: $episode
+  #   ) {
+  #     name
+  #     friends @include(
+  #       if: $withFriends
+  #     ) {
   #       name
   #     }
   #   }
@@ -341,6 +399,7 @@ Creating mutation is the same as creating query
       variables=[ep, review],
       queries=[createReview],
   )
+  print(operation.render())
   # mutation CreateReviewForEpisode(
   #   $ep: Episode!
   #   $review: ReviewInput!
@@ -383,6 +442,7 @@ For union types you can using inline fragments https://graphql.org/learn/queries
       variables=[ep],
       queries=[hero],
   )
+  print(operation.render())
   # query HeroForEpisode(
   #   $ep: Episode!
   # ) {
@@ -423,6 +483,7 @@ Typename of fields
       type="query",
       queries=[search],
   )
+  print(operation.render())
   # query {
   #   search(
   #     text: "an"
