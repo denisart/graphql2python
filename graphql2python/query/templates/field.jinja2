@@ -4,7 +4,7 @@
 {%- for argument in arguments %}
   {{ argument }}
 {%- endfor %}
-){% endif %}
+){% endif %}{%- if directives|length > 0 -%}{%- for directive in directives %} {{ directive }}{%- endfor %}{% endif %}
 {%- if fields|length > 0 %} {
 {%- if typename %}
   __typename

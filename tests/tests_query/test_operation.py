@@ -2,7 +2,7 @@ from typing import List, Optional
 
 import pytest
 
-from graphql2python.query import Argument, Field, Fragment, Operation, Query, Variable
+from graphql2python.query import Argument, Directive, Field, Fragment, Operation, Query, Variable
 
 
 @pytest.mark.parametrize(
@@ -366,6 +366,60 @@ fragment comparisonFields on Character {
   }
 }'''
         ),
+        # query Hero($episode: Episode, $withFriends: Boolean!) {
+        #   hero(episode: $episode) {
+        #     name
+        #     friends @include(if: $withFriends) {
+        #       name
+        #     }
+        #   }
+        # }
+        (
+            "query", "Hero",
+            [
+                Variable(name="episode", type="Episode"),
+                Variable(name="withFriends", type="Boolean!")
+            ],
+            [
+                Query(
+                    name="hero",
+                    arguments=[
+                        Argument(name="episode", value=Variable(name="episode", type="Episode")),
+                    ],
+                    fields=[
+                        "name",
+                        Field(
+                            name="friends",
+                            fields=["name"],
+                            directives=[
+                                Directive(
+                                    name="include",
+                                    arguments=[
+                                        Argument(name="if", value=Variable(name="withFriends", type="Boolean!"))
+                                    ]
+                                )
+                            ]
+                        )
+                    ]
+                ),
+            ],
+            [],
+            '''query Hero(
+  $episode: Episode
+  $withFriends: Boolean!
+) {
+  hero(
+    episode: $episode
+  ) {
+    name
+    friends @include(
+      if: $withFriends
+    ) {
+      name
+    }
+  }
+}'''
+        )
     ]
 )
 def test_operation(
