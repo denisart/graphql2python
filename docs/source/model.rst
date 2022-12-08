@@ -1,7 +1,9 @@
-graphql2python.model usage examples
+GraphQL schema
 =====
 
-Usage examples for schema from https://graphql.org/learn/schema/
+graphql2python has the function for generation of
+pydantic data-model by your GraphQL schema. Below are examples of
+using these classes for schema from GraphQL documentation https://graphql.org/learn/schema/
 
 Scalar
 ------
@@ -10,9 +12,12 @@ The generated scalar looks like this:
 
 .. code-block:: graphql
 
+  # in schema.graphql
   scalar DateTime
 
 .. code-block:: python
+
+  ...
 
   # The `Boolean` scalar type represents `true` or `false`.
   Boolean = str
@@ -43,11 +48,12 @@ or with comment
 
   ...
 
-The default type is **str**. For change this you can using options
+The default python type for generated scalars is **str**.
+For change this you can using special option in **graphql2python** config:
 
 .. code-block:: yaml
 
-  # graphql2pythonConfig.yaml
+  # graphql2python.yaml
   schema: ...
   output: ...
   options:
@@ -60,6 +66,8 @@ The default type is **str**. For change this you can using options
       DateTime: datetime
 
 .. code-block:: python
+
+  ...
 
   # The `Boolean` scalar type represents `true` or `false`.
   Boolean = bool
@@ -78,19 +86,20 @@ The default type is **str**. For change this you can using options
 Enum
 ----
 
-For an enum definition:
+GraphQL Enum objects rendered as Python **enum.Enum** classes
 
 .. code-block:: graphql
 
+  # in schema.graphql
   enum Episode {
     NEWHOPE
     EMPIRE
     JEDI
   }
 
-we have
-
 .. code-block:: python
+
+  ...
 
   class Episode(enum.Enum):
       """
@@ -101,7 +110,7 @@ we have
       JEDI = "JEDI"
       NEWHOPE = "NEWHOPE"
 
-or with description
+Or with Enum description
 
 .. code-block:: graphql
 
@@ -117,6 +126,8 @@ or with description
 
 .. code-block:: python
 
+  ...
+
   class Episode(enum.Enum):
       """
       This means that wherever we use the type Episode in our schema
@@ -129,7 +140,7 @@ or with description
 Union
 -----
 
-For the schema
+GraphQL Union objects rendered as Python **typing.Union**
 
 .. code-block:: graphql
 
@@ -157,10 +168,48 @@ we have
 
   ...
 
+Since **input.Union** cannot contain a single element
+for such Unions we have the following
+
+.. code-block:: graphql
+
+  ...
+
+  """
+  Wherever we return a SearchResult type in our schema,
+  we might get a Human, a Droid, or a Starship.
+  """
+  union SearchResult = Human
+
+.. code-block:: python
+
+  ...
+
+  # Wherever we return a SearchResult type in our schema,
+  # we might get a Human, a Droid, or a Starship.
+  SearchResult = _t.TypeVar('SearchResult', bound='Human')
+
+  ...
+
 Object and interfaces
 ---------------------
 
-For the schema
+Rendered Interfaces and Objects are inherited from the main class
+
+.. code-block:: python
+
+  class GraphQLBaseModel(BaseModel):
+      """Base Model for GraphQL object."""
+
+      class Config:
+          allow_population_by_field_name = True
+          json_encoders = {
+              # custom output conversion for datetime
+              datetime: lambda dt: dt.isoformat()
+          }
+          smart_union = True
+
+So for the following diagram
 
 .. code-block:: graphql
 
@@ -203,7 +252,7 @@ For the schema
     length: Float
   }
 
-we have
+we have the following python code
 
 .. code-block:: python
 
@@ -240,6 +289,7 @@ we have
       """
       starships: _t.Optional[_t.List[_t.Optional['Starship']]] = Field(default_factory=list)
       totalCredits: _t.Optional['Int'] = Field(default=None)
+      typename__: _t.Literal["Human"] = Field(default="Human", alias="__typename")
 
 
   class Starship(
@@ -250,27 +300,13 @@ we have
       See https://graphql.org/learn/schema/#object-types-and-fields
       """
       length: _t.Optional['Float'] = Field(default=None)
+      typename__: _t.Literal["Starship"] = Field(default="Starship", alias="__typename")
 
 
   Character.update_forward_refs()
   Droid.update_forward_refs()
   Human.update_forward_refs()
   Starship.update_forward_refs()
-
-where the **GraphQLBaseModel** it is
-
-.. code-block:: python
-
-  class GraphQLBaseModel(BaseModel):
-      """Base Model for GraphQL object."""
-
-      class Config:
-          allow_population_by_field_name = True
-          json_encoders = {
-              # custom output conversion for datetime
-              datetime: lambda dt: dt.isoformat()
-          }
-          smart_union = True
 
 Rename field
 ------------
@@ -279,7 +315,7 @@ For rename field we can using the following config:
 
 .. code-block:: yaml
 
-  # graphql2python_config.yaml
+  # graphql2python.yaml
   schema: ./schema.graphql
   output: ./output.py
   options:
@@ -315,3 +351,4 @@ For rename field we can using the following config:
       id: 'ID'
       character_name: 'String' = Field(..., alias='name')
       friends: _t.Optional[_t.List[_t.Optional['Character']]] = Field(default_factory=list)
+      typename__: _t.Literal["Character"] = Field(default="Character", alias="__typename")

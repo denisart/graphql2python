@@ -3,4 +3,5 @@ Guides
 
 .. toctree::
 
-   query
+  query
+  model
