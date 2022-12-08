@@ -246,7 +246,7 @@ class Field(GraphQL2PythonQuery):
     fields: List[Union[str, 'Field', 'InlineFragment', 'Fragment']] = PydanticField(
         default_factory=list
     )
-    directives: Optional[List[Directive]] = PydanticField(default_factory=list)
+    directives: List[Directive] = PydanticField(default_factory=list)
     typename: bool = PydanticField(default=False, description="add meta field __typename to sub-fields")
 
     _template: Template = template_env.get_template("field.jinja2")
