@@ -1,0 +1,6 @@
+Guides
+======
+
+.. toctree::
+
+   query

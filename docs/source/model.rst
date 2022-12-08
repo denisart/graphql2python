@@ -217,6 +217,7 @@ we have
       id: 'ID'
       name: 'String'
       friends: _t.Optional[_t.List[_t.Optional['Character']]] = Field(default_factory=list)
+      typename__: _t.Literal["Character"] = Field(default="Character", alias="__typename")
 
 
   class Droid(
@@ -227,6 +228,7 @@ we have
       See https://graphql.org/learn/schema/#object-types-and-fields
       """
       primaryFunction: _t.Optional['String'] = Field(default=None)
+      typename__: _t.Literal["Droid"] = Field(default="Droid", alias="__typename")
 
 
   class Human(
