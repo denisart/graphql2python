@@ -32,7 +32,8 @@ def test_render_interface_simple():
     f1: _t.Optional['String'] = Field(default=None, alias='f1_alias')
     f2: _t.Optional['String'] = Field(default=None)
     f3_new: _t.Optional['String'] = Field(default=None)
-    from_: _t.Optional['String'] = Field(default=None)'''
+    from_: _t.Optional['String'] = Field(default=None)
+    typename__: _t.Literal["I"] = Field(default="I", alias="__typename")'''
 
     assert render.render_interface(obj, field_aliases) == result
 
@@ -63,7 +64,8 @@ def test_render_interface_not_all_optional():
     f2: 'String'
     f1: _t.Optional['String'] = Field(default=None, alias='f1_alias')
     f3_new: _t.Optional['String'] = Field(default=None)
-    from_: _t.Optional['String'] = Field(default=None)'''
+    from_: _t.Optional['String'] = Field(default=None)
+    typename__: _t.Literal["I"] = Field(default="I", alias="__typename")'''
 
     assert render.render_interface(obj, field_aliases) == result
 
@@ -94,7 +96,8 @@ def test_render_interface_all_optional():
     f1: _t.Optional['String'] = Field(default=None, alias='f1_alias')
     f2: _t.Optional['String'] = Field(default=None)
     f3_new: _t.Optional['String'] = Field(default=None)
-    from_: _t.Optional['String'] = Field(default=None)'''
+    from_: _t.Optional['String'] = Field(default=None)
+    typename__: _t.Literal["I"] = Field(default="I", alias="__typename")'''
 
     render_optional = DataModelRender(each_field_optional=True)
     assert render_optional.render_interface(obj, field_aliases) == result
@@ -124,6 +127,7 @@ def test_render_interface_inherit():
     An Interface type
     See https://graphql.org/learn/schema/#interfaces
     """
-    f1: _t.Optional['String'] = Field(default=None)'''
+    f1: _t.Optional['String'] = Field(default=None)
+    typename__: _t.Literal["I"] = Field(default="I", alias="__typename")'''
 
     assert render.render_interface(obj, {}) == result

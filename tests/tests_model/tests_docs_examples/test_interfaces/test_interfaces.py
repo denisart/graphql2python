@@ -104,6 +104,7 @@ class Character(GraphQLBaseModel):
     id: 'ID'
     name: 'String'
     friends: _t.Optional[_t.List[_t.Optional['Character']]] = Field(default_factory=list)
+    typename__: _t.Literal["Character"] = Field(default="Character", alias="__typename")
 
 
 class Droid(
@@ -114,6 +115,7 @@ class Droid(
     See https://graphql.org/learn/schema/#object-types-and-fields
     """
     primaryFunction: _t.Optional['String'] = Field(default=None)
+    typename__: _t.Literal["Droid"] = Field(default="Droid", alias="__typename")
 
 
 class Human(
@@ -125,6 +127,7 @@ class Human(
     """
     starships: _t.Optional[_t.List[_t.Optional['Starship']]] = Field(default_factory=list)
     totalCredits: _t.Optional['Int'] = Field(default=None)
+    typename__: _t.Literal["Human"] = Field(default="Human", alias="__typename")
 
 
 class Starship(GraphQLBaseModel):
@@ -135,6 +138,7 @@ class Starship(GraphQLBaseModel):
     id: 'ID'
     name: 'String'
     length: _t.Optional['Float'] = Field(default=None)
+    typename__: _t.Literal["Starship"] = Field(default="Starship", alias="__typename")
 
 
 Character.update_forward_refs()

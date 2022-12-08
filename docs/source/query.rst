@@ -1,13 +1,25 @@
-graphql2python.query usage examples
+GraphQL queries
 =====
 
-Usage examples for queries from https://graphql.org/learn/queries/
+**graphql2python** provides special python classes for generate of GraphQL queries.
+Below are examples of using these classes for queries from GraphQL documentation
+https://graphql.org/learn/queries/
 
-Simple query
+First query
 ------------
 
-Code for simple query from (see https://graphql.org/learn/queries/#fields)
-with **graphql2python.query**
+**Operation** it is the general class for render of your GraphQL query or mutation.
+For the first query from https://graphql.org/learn/queries/#fields)
+
+.. code-block:: graphql
+
+  {
+    hero {
+      name
+    }
+  }
+
+we can to use **graphql2python.query.Operation** as like that
 
 .. code-block:: python
 
@@ -23,10 +35,21 @@ with **graphql2python.query**
   #  }
   # }
 
-Sub-fields
-----------
+Same way for the query with sub-fields
 
-Simple example with sub-field
+.. code-block:: graphql
+
+  {
+    hero {
+      name
+      # Queries can have comments!
+      friends {
+        name
+      }
+    }
+  }
+
+we can to use **graphql2python.query.Field** as like that
 
 .. code-block:: python
 
@@ -54,7 +77,8 @@ Simple example with sub-field
 Arguments
 ---------
 
-Code for query from https://graphql.org/learn/queries/#arguments
+For arguments in your query or fields (https://graphql.org/learn/queries/#arguments)
+you can using **graphql2python.query.Argument**:
 
 .. code-block:: python
 
@@ -86,7 +110,7 @@ Code for query from https://graphql.org/learn/queries/#arguments
 Aliases
 -------
 
-Example with aliases for queries
+**graphql2python.query.Query** has the special field for alias
 
 .. code-block:: python
 
@@ -124,7 +148,8 @@ Example with aliases for queries
 Fragments
 ---------
 
-Fragment in query is easy
+Fragment is the power of GraphQL. Use **graphql2python.query.Fragment** with
+**graphql2python.query.Operation.fragments**:
 
 .. code-block:: python
 
@@ -179,6 +204,8 @@ Fragment in query is easy
 
 Using variables inside fragments
 --------------------------------
+
+Variables can also be used in fragments
 
 .. code-block:: python
 
@@ -330,7 +357,7 @@ Creating mutation is the same as creating query
 Inline Fragments
 ----------------
 
-Example from https://graphql.org/learn/queries/#inline-fragments
+For union types you can using inline fragments https://graphql.org/learn/queries/#inline-fragments
 
 .. code-block:: python
 
@@ -375,7 +402,7 @@ Example from https://graphql.org/learn/queries/#inline-fragments
 Meta fields
 -----------
 
-Type name to fields
+Typename of fields
 
 .. code-block:: python
 

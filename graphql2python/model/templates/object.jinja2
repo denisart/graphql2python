@@ -9,3 +9,4 @@ class {{ name }}
 {%- for field in fields %}
 {{ field }}
 {%- endfor %}
+    typename__: _t.Literal["{{ name }}"] = Field(default="{{ name }}", alias="__typename")

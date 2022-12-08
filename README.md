@@ -5,32 +5,28 @@
 [![last-commit](https://img.shields.io/github/last-commit/denisart/graphql2python/master)](https://github.com/denisart/graphql2python)
 [![license](https://img.shields.io/github/license/denisart/graphql2python)](https://github.com/denisart/graphql2python/blob/master/LICENSE)
 
-Tools for GraphQL client in python:
+graphql2python is a tool that generates python code out of your GraphQL schema.
+If you are using python as GraphQL client you can to generate GraphQL queries and
+pydantic data-model with graphql2python.
 
-- A simple GraphQL client;
-- Auto generated pydantic classes from a GraphQL schema;
-- Auto generated GraphQL queries;
-- e.t.c
+graphql2python has the following tools for your python GraphQL client:
 
-## Installation
+- python classes for generate of GraphQL queries;
+- the function for generation of pydantic data-model by your GraphQL schema;
+- ... (in future releases);
 
-Install using
+## Quickstart
+
+Install with pip
 
 ```bash
 pip install graphql2python
 ```
 
-## Documentation
-
-See documentation in `docs/`.
-
-## Simple example
-
-A simple example for data-model generation.
-
-Create a file `graphql2python.yaml`:
+Create the following file
 
 ```yaml
+# graphql2python.yaml
 schema: ./schema.graphql
 output: ./model.py
 ```
@@ -40,3 +36,6 @@ and run the following command
 ```bash
 graphql2python render --config ./graphql2python.yaml
 ```
+
+See the documentation for all the possibilities (
+while it is `docs/source/`).
