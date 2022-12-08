@@ -11,6 +11,7 @@ from pydantic import validator
 __all__ = [
     "Variable",
     "Argument",
+    "Directive",
     "Field",
     "InlineFragment",
     "Fragment",
@@ -180,6 +181,27 @@ class Argument(GraphQL2PythonQuery):
         )
 
 
+class Directive(GraphQL2PythonQuery):
+    """GraphQL directive type. See https://graphql.org/learn/queries/#directives
+
+    """
+
+    name: str
+    arguments: List[Argument] = PydanticField(default_factory=list)
+
+    _template_directive: Template = template_env.get_template("directive.jinja2")
+
+    @validator("name")
+    def graphql_directive_name(cls, name: str):
+        return assert_name(name)
+
+    def render(self) -> str:
+        return self._template_directive.render(
+            name=self.name,
+            arguments=[self._line_shift(argument.render()) for argument in self.arguments]
+        )
+
+
 class Field(GraphQL2PythonQuery):
     """GraphQL Field type. See https://graphql.org/learn/queries/#fields
 
@@ -224,6 +246,7 @@ class Field(GraphQL2PythonQuery):
     fields: List[Union[str, 'Field', 'InlineFragment', 'Fragment']] = PydanticField(
         default_factory=list
     )
+    directives: List[Directive] = PydanticField(default_factory=list)
     typename: bool = PydanticField(default=False, description="add meta field __typename to sub-fields")
 
     _template: Template = template_env.get_template("field.jinja2")
@@ -244,6 +267,7 @@ class Field(GraphQL2PythonQuery):
             alias=self.alias,
             arguments=[self._line_shift(argument.render()) for argument in self.arguments],
             fields=[self._render_field(field) for field in self.fields],
+            directives=[directive.render() for directive in self.directives],
             typename=self.typename
         )
 

@@ -2,7 +2,7 @@ from typing import List, Optional, Union
 
 import pytest
 
-from graphql2python.query import Argument, Field, Fragment, InlineFragment
+from graphql2python.query import Argument, Directive, Field, Fragment, InlineFragment, Variable
 
 from .data import (arg_1, arg_2, field_friends, field_friends_connection, field_height, field_node, field_simple,
                    field_simple_typename)
@@ -89,3 +89,49 @@ def test_field(
         typename=typename
     )
     assert field.render() == result
+
+
+def test_field_with_directive():
+    field = Field(
+        name="friends",
+        fields=["name"],
+        directives=[
+            Directive(
+                name="include",
+                arguments=[
+                    Argument(name="if", value=Variable(name="withFriends", type="Boolean!"))
+                ]
+            )
+        ]
+    )
+
+    assert field.render() == '''friends @include(
+  if: $withFriends
+) {
+  name
+}'''
+
+
+def test_field_with_two_directives():
+    field = Field(
+        name="friends",
+        fields=["name"],
+        directives=[
+            Directive(
+                name="include",
+                arguments=[Argument(name="if", value="true")]
+            ),
+            Directive(
+                name="skip",
+                arguments=[Argument(name="if", value="false")]
+            )
+        ]
+    )
+
+    assert field.render() == '''friends @include(
+  if: true
+) @skip(
+  if: false
+) {
+  name
+}'''
