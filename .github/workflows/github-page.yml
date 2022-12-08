@@ -30,6 +30,7 @@ jobs:
         uses: actions/checkout@v3
       - name: Build docs
         run: |
+          python -m pip install -e ."[dev, test]"
           cd docs && make html
       - name: Setup Pages
         uses: actions/configure-pages@v2
