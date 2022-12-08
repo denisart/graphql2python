@@ -102,6 +102,7 @@ class Character(GraphQLBaseModel):
     id: 'ID'
     name: 'String'
     friends: _t.Optional[_t.List[_t.Optional['Character']]] = Field(default_factory=list)
+    typename__: _t.Literal["Character"] = Field(default="Character", alias="__typename")
 
 
 class Human(
@@ -112,6 +113,7 @@ class Human(
     See https://graphql.org/learn/schema/#object-types-and-fields
     """
     totalCredits: _t.Optional['Int'] = Field(default=None)
+    typename__: _t.Literal["Human"] = Field(default="Human", alias="__typename")
 
 
 Character.update_forward_refs()
