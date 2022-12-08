@@ -1,0 +1,6 @@
+Usage examples
+=================
+
+.. toctree::
+
+  gql

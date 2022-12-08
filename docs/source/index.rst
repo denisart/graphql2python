@@ -33,6 +33,7 @@ Contents
 .. toctree::
 
   guides
+  examples
 
 Quickstart
 ----------
