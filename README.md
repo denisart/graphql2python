@@ -15,6 +15,8 @@ graphql2python has the following tools for your python GraphQL client:
 - the function for generation of pydantic data-model by your GraphQL schema;
 - ... (in future releases);
 
+The special example for [gql](https://gql.readthedocs.io/en/latest/index.html) users [here](https://github.com/denisart/graphql2python/blob/master/docs/source/gql.rst).
+
 ## Quickstart
 
 Install with pip
