@@ -39,7 +39,6 @@ jobs:
         with:
           source: ./docs/build/html/
           destination: ./_site
-          include: ./_static/
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
 
