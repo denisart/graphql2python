@@ -32,6 +32,7 @@ jobs:
         run: |
           python -m pip install -e ."[dev, test]"
           cd docs && make html
+          cp ./docs/.nojekyll ./docs/build/html/
       - name: Setup Pages
         uses: actions/configure-pages@v2
       - name: Build with Jekyll
