@@ -2,7 +2,7 @@ from typing import List
 
 import pytest
 
-from graphql2python.query import Argument, Variable, Directive
+from graphql2python.query import Argument, Directive, Variable
 
 
 @pytest.mark.parametrize(
