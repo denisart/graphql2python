@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 from typing import Dict, Optional
 
@@ -8,6 +9,9 @@ __all__ = [
     "GraphQL2PythonModelOptions",
     "GraphQL2PythonModelConfig",
 ]
+
+
+cwd_path = Path(os.getcwd())
 
 
 class FieldSetting(BaseModel):
@@ -41,12 +45,16 @@ class GraphQL2PythonModelConfig(BaseModel):
 
     graphql_schema: Path = Field(description="A path to the target GraphQL schema file.", alias="schema")
     output: Path = Field(description="A path to an output python file.")
+    license_file: Optional[Path] = Field(default=None, description="A path to a license file header for output.")
     options: GraphQL2PythonModelOptions = Field(
         description="Data-model render options.", default=GraphQL2PythonModelOptions()
     )
 
     @validator("graphql_schema")
     def validation_graphql_schema_file(cls, schema_path: Path):
+        if not schema_path.is_absolute():
+            schema_path = (cwd_path / schema_path).resolve()
+
         if not schema_path.exists():
             raise ValueError(f"The file {schema_path} is not exist.")
 
@@ -60,7 +68,23 @@ class GraphQL2PythonModelConfig(BaseModel):
 
     @validator("output")
     def validation_output_py_file(cls, output_path: Path):
+        if not output_path.is_absolute():
+            output_path = (cwd_path / output_path).resolve()
+
         if output_path.suffix != ".py":
             raise ValueError("The output file must have the suffix is .py")
 
         return output_path
+
+    @validator("license_file")
+    def validation_license_file(cls, license_path: Path):
+        if not license_path.is_absolute():
+            license_path = (cwd_path / license_path).resolve()
+
+        if not license_path.exists():
+            raise ValueError(f"The file {license_path} is not exist.")
+
+        if not license_path.is_file():
+            raise ValueError("The license_file is not file.")
+
+        return license_path

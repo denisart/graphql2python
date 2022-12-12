@@ -28,12 +28,6 @@ def generate(config: str):
     with config_path.open("r", encoding="utf-8") as config_file:
         yaml_config = yaml.safe_load(config_file)
 
-    if ("schema" not in yaml_config) or ("output" not in yaml_config):
-        raise ValueError("Missing config fields: schema or output.")
-
-    yaml_config["schema"] = (cwd_path / Path(yaml_config["schema"])).resolve()
-    yaml_config["output"] = (cwd_path / Path(yaml_config["output"])).resolve()
-
     graphql2python_config = GraphQL2PythonModelConfig.parse_obj(yaml_config)
 
     generator = Generator(graphql2python_config)
