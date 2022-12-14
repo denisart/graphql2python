@@ -168,11 +168,12 @@ You will receive the following file `model.py`:
 Step 2
 ------
 
-Create the file with query **queries.py**:
+Create the queries with graphql-query (https://github.com/denisart/graphql-query):
 
 .. code-block:: python
 
-  from graphql2python.query import Operation, Query
+  # queries.py
+  from graphql_query import Operation, Query
 
   continents = Query(name="continents", fields=["code", "name"])
   getContinents = Operation(
