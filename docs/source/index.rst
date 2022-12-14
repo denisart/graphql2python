@@ -16,14 +16,10 @@ Welcome to graphql2python's documentation!
   :alt: license
 
 **graphql2python** is a tool that generates python code out of your GraphQL schema.
-If you are using python as GraphQL client you can to generate GraphQL queries and
+If you are using python as GraphQL client you can to generate
 pydantic data-model with **graphql2python**.
 
-**graphql2python** has the following tools for your python GraphQL client:
-
-- python classes for generate of GraphQL queries;
-- the function for generation of pydantic data-model by your GraphQL schema;
-- ... (in future releases);
+GraphQL query generation moved to https://github.com/denisart/graphql-query
 
 Documentation for version:  |version|
 
