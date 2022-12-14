@@ -1,17 +1,6 @@
 """GRAPHQL2PYTHON
 
-Tools for GraphQL client in python:
-
-    - A simple GraphQL client;
-    - Auto generated pydantic classes from a GraphQL schema;
-    - Auto generated GraphQL queries;
-    - e.t.c
-
-The sub-packages:
-
-    - `graphql2python.client`:
-    - `graphql2python.model`: The package with the pydantic datamodel generator from some GraphQL schema;
-    - `graphql2python.query`: Tools for generate GraphQL queries from python classes;
+**graphql2python** is a tool that generates python code out of your GraphQL schema.
 
 """
 
