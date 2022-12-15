@@ -352,3 +352,48 @@ For rename field we can using the following config:
       character_name: 'String' = Field(..., alias='name')
       friends: _t.Optional[_t.List[_t.Optional['Character']]] = Field(default_factory=list)
       typename__: _t.Literal["Character"] = Field(default="Character", alias="__typename")
+
+Deprecation field
+-----
+
+graphql2python support only `@deprecated` directive for fields
+(because graphql-core supported only this directive https://github.com/graphql-python/graphql-core/issues/162).
+Example of result with `@deprecated`:
+
+.. code-block:: graphql
+
+  # schema.graphql
+  type Country {
+    code: ID! @deprecated(reason: "my reason") @requires(fields: "name")
+    name: String! @requires(fields: "phone")
+    native: String!
+    phone: String!
+    continent: Continent!
+    capital: String
+    currency: String
+    languages: [Language!]!
+    emoji: String!
+    emojiU: String!
+    states: [State!]!
+  }
+
+.. code-block:: python
+
+  # output.py
+  class Country(GraphQLBaseModel):
+      """
+      An Object type
+      See https://graphql.org/learn/schema/#object-types-and-fields
+      """
+      capital: _t.Optional['String'] = Field(default=None)
+      code: _t.Optional['ID'] = Field(default=None)  # deprecation_reason: my reason
+      continent: _t.Optional['Continent'] = Field(default=None)
+      currency: _t.Optional['String'] = Field(default=None)
+      emoji: _t.Optional['String'] = Field(default=None)
+      emojiU: _t.Optional['String'] = Field(default=None)
+      languages: _t.Optional[_t.List['Language']] = Field(default_factory=list)
+      name: _t.Optional['String'] = Field(default=None)
+      native: _t.Optional['String'] = Field(default=None)
+      phone: _t.Optional['String'] = Field(default=None)
+      states: _t.Optional[_t.List['State']] = Field(default_factory=list)
+      typename__: _t.Literal["Country"] = Field(default="Country", alias="__typename")
