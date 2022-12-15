@@ -65,3 +65,28 @@ Options keywords
 |------------|-----------------------------------------------------------------------|
 | `alias`    | An alias for a field (see Field.alias for pydantic). Default is null. |
 | `new_name` | A new name for a field. Default is null.                              |
+
+An example for `graphql2python.yaml` config:
+
+```yaml
+# graphql2python.yaml
+schema: ./schema/schema.graphql
+output: ./model/model.py
+license_file: ./LICENSE
+options:
+  scalar_pytypes:
+    String: str
+    Float: float
+    Int: int
+    ID: str
+    Boolean: bool
+    DateTime: datetime
+    Date: date
+  max_line_len: 79
+  each_field_optional: true
+  fields_setting:
+    MyObjectName:
+      from:
+        alias: from
+        new_name: correct_from
+```
