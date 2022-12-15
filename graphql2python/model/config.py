@@ -15,15 +15,17 @@ cwd_path = Path(os.getcwd())
 
 
 class FieldSetting(BaseModel):
-    alias: Optional[str] = Field(default=None)
-    new_name: Optional[str] = Field(default=None)
+    """Settings for an object field."""
+
+    alias: Optional[str] = Field(default=None, description="An alias for a field (see Field.alias for pydantic).")
+    new_name: Optional[str] = Field(default=None, description="")
 
 
 class GraphQL2PythonModelOptions(BaseModel):
     """Data-model render options."""
 
     scalar_pytypes: Dict[str, str] = Field(
-        description="Python types for custom GraphQL scalars.",
+        description="A dict with python types for custom GraphQL scalars.",
         default_factory=dict
     )
     fields_setting: Dict[str, Dict[str, FieldSetting]] = Field(
