@@ -6,7 +6,7 @@
 Welcome to graphql2python's documentation!
 ===================================
 
-.. image:: https://img.shields.io/github/workflow/status/denisart/graphql2python/Code%20checking
+.. image:: https://img.shields.io/github/actions/workflow/status/denisart/graphql2python/check.yml
   :alt: Build
 .. image:: https://img.shields.io/github/v/tag/denisart/graphql2python
   :alt: tag
