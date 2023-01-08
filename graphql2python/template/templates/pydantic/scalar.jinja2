@@ -1,0 +1,2 @@
+{{ comment_template.render(lines=obj.description.split('\n')) if obj.description is not none else '' -}}
+{{ alias or obj.name }} = {{ pytype }}
