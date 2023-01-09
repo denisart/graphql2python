@@ -88,11 +88,12 @@ class TemplatesManager:
     ) -> str:
         """Render a Scalar object.
 
-        :param scalar_object:
-        :param pytype:
-        :param alias:
-        :param extra_template_data:
-        :return:
+        Args:
+            scalar_object: a target Scalar object.
+            pytype: python type for the scalar.
+            alias: optional alias for the scalar name.
+            extra_template_data: some data for custom template.
+
         """
 
         return self.get_template("scalar.jinja2").render(

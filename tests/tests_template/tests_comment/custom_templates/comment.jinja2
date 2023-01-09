@@ -1,0 +1,2 @@
+{% for line in lines %}# comment line: {{ line }}{{ '\n' if not loop.last }}{% endfor %}
+# @deprecation_reason: {{ extra_template_data['deprecation_reason'] }}
