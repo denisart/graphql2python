@@ -84,12 +84,13 @@ __pycache__/
 *.py[cod]
 *$py.class
 *.egg-info/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.coverage
 
 .env
 .venv
 env/
 venv/
-.mypy_cache/
-.ruff_cache/
-.pytest_cache/
 dist/

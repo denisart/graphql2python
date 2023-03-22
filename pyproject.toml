@@ -97,3 +97,6 @@ color = true
 line-length = 120
 target-version = ['py310']
 skip-string-normalization = true
+exclude = [
+    "graphql2python/utils/graphlib.py",
+]

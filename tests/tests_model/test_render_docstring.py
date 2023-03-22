@@ -8,12 +8,7 @@ render = DataModelRender()
 
 
 @pytest.mark.parametrize(
-    "lines, result",
-    [
-        ([], '"""\n...\n"""'),
-        (['a', 'b'], '"""\na\nb\n"""'),
-        (['a', 'b\nc'], '"""\na\nb\nc\n"""')
-    ]
+    "lines, result", [([], '"""\n...\n"""'), (['a', 'b'], '"""\na\nb\n"""'), (['a', 'b\nc'], '"""\na\nb\nc\n"""')]
 )
 def test_render_docstring_lines(lines: List[str], result: str):
     """Test for docstring render."""
@@ -23,10 +18,7 @@ def test_render_docstring_lines(lines: List[str], result: str):
 def test_render_docstring_lines_long_line():
     """Test for docstring render with long line."""
 
-    lines = [
-        'aaaaaaaa',
-        'aaa aaa aaa aaaaaaaa a aaa a aaaa a'
-    ]
+    lines = ['aaaaaaaa', 'aaa aaa aaa aaaaaaaa a aaa a aaaa a']
 
     result = '''"""
 aaaaaaaa
@@ -43,10 +35,7 @@ a
 def test_render_docstring_lines_long_line_ident():
     """Test for docstring render with long line and with non-zero indent"""
 
-    lines = [
-        'aaaaaaaa',
-        'aaa aaa aaa aaaaaaaa a aaa a aaaa a'
-    ]
+    lines = ['aaaaaaaa', 'aaa aaa aaa aaaaaaaa a aaa a aaaa a']
 
     result = '''    """
     aaaaaaaa

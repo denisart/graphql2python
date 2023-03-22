@@ -10,34 +10,27 @@ render = DataModelRender()
     "obj, result",
     [
         (
-            GraphQLUnionType(
-                'MyUnion',
-                types=[GraphQLObjectType('MyObject1', {}), GraphQLObjectType('MyObject2', {})]
-            ),
+            GraphQLUnionType('MyUnion', types=[GraphQLObjectType('MyObject1', {}), GraphQLObjectType('MyObject2', {})]),
             """# A Union type
 # See https://graphql.org/learn/schema/#union-types
 MyUnion = _t.Union[
     'MyObject1',
     'MyObject2',
-]"""
+]""",
         ),
         (
             GraphQLUnionType(
                 'MyUnion',
                 types=[GraphQLObjectType('MyObject1', {}), GraphQLObjectType('MyObject2', {})],
-                description='my description'
+                description='my description',
             ),
-            "# my description\nMyUnion = _t.Union[\n    'MyObject1',\n    'MyObject2',\n]"
+            "# my description\nMyUnion = _t.Union[\n    'MyObject1',\n    'MyObject2',\n]",
         ),
         (
-            GraphQLUnionType(
-                'MyUnion',
-                types=[GraphQLObjectType('MyObject1', {})],
-                description='my description'
-            ),
-            "# my description\nMyUnion = _t.TypeVar('MyUnion', bound='MyObject1')"
+            GraphQLUnionType('MyUnion', types=[GraphQLObjectType('MyObject1', {})], description='my description'),
+            "# my description\nMyUnion = _t.TypeVar('MyUnion', bound='MyObject1')",
         ),
-    ]
+    ],
 )
 def test_render_union(obj: GraphQLUnionType, result: str):
     """Tests for a union render with some options."""
