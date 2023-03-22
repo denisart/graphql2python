@@ -52,7 +52,7 @@ and run the following command
 
 .. code-block:: bash
 
-  graphql2python render --config ./graphql2python.yaml
+  graphql2python generate --config ./graphql2python.yaml
 
 See the documentation for all the possibilities (
 while it is `docs/source/`).
@@ -75,7 +75,7 @@ Global keywords
   * - `license_file`
     - An optional path to a file with license for output `py` file.
   * - `options`
-    - Optional options for render of output `py` file.
+    - Optional options for generate of output `py` file.
 
 Options keywords
 

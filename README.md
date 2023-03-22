@@ -33,7 +33,7 @@ output: ./model.py
 and run the following command
 
 ```bash
-graphql2python render --config ./graphql2python.yaml
+graphql2python generate --config ./graphql2python.yaml
 ```
 
 ## Config reference
@@ -45,7 +45,7 @@ Global keywords
 | `schema`       | A path to the target GraphQL schema file.                     |
 | `output`       | A file name for output `py` file.                             |
 | `license_file` | An optional path to a file with license for output `py` file. |
-| `options`      | Optional options for render of output `py` file.              |
+| `options`      | Optional options for generate of output `py` file.            |
 
 Options keywords
 
