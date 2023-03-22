@@ -1,0 +1,99 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+path = "graphql2python/__version__.py"
+
+[project]
+name = "graphql2python"
+description = "A tool that generates python code out of your GraphQL schema."
+readme = "README.md"
+authors = [
+    {name = "Denis A. Artyushin", email = "artyushinden@gmail.com"},
+]
+keywords = [
+    "python", "graphql", "schema",
+    "graphql-schema", "code-generation", "codegen",
+]
+license = "MIT"
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: Unix",
+    "Operating System :: POSIX :: Linux",
+    "Environment :: Console",
+    "Environment :: MacOS X",
+    "Framework :: Pydantic",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+requires-python = ">=3.8"
+dependencies = [
+    "pydantic>=1.10, <1.11",
+    "jinja2>=3.1, <3.2",
+    "graphql-core>=3.2, <3.3",
+    "click>=8.1, <8.2",
+    "pyyaml>=6.0, <6.1",
+]
+dynamic = ["version"]
+
+[project.entry-points.graphql2python]
+graphql2python = "graphql2python.__main__:graphql2python"
+
+[project.urls]
+Homepage = "https://github.com/denisart/graphql2python"
+Documentation = "https://denisart.github.io/graphql2python/"
+Source = "https://github.com/denisart/graphql2python"
+
+[project.optional-dependencies]
+# all requirements for linting, building and etc.
+dev = [
+    "mypy",
+    "ruff",
+    "wheel",
+    "black",
+    "types-pyyaml",
+]
+
+# all requirements for tests
+test = [
+    "pytest",
+    "pytest-mock",
+    "pytest-cov",
+]
+
+# all requirements for docs generation
+docs = [
+    "sphinx",
+    "sphinx_rtd_theme",
+    "sphinx-argparse",
+    "sphinxcontrib-github",
+]
+
+[tool.ruff]
+line-length = 120
+flake8-quotes = {inline-quotes = 'single', multiline-quotes = 'double'}
+mccabe = { max-complexity = 14 }
+isort = { known-first-party = ['graphql_core', 'tests'] }
+target-version = "py38"
+
+exclude = [
+    "graphql2python/utils/graphlib.py",
+    "tests/tests_model/tests_docs_examples/test_custom_scalar/output.py",
+    "tests/tests_model/tests_docs_examples/test_interfaces/output.py",
+    "tests/tests_model/tests_docs_examples/test_unique_union/output.py",
+]
+
+[tool.black]
+color = true
+line-length = 120
+target-version = ['py310']
+skip-string-normalization = true
