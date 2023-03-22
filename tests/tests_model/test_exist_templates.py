@@ -14,7 +14,7 @@ from graphql2python.model.render import template_env
         "union.jinja2",
         "interface.jinja2",
         "object.jinja2",
-    ]
+    ],
 )
 def test_exist_templates_for_model(template_name: str):
     tpl = template_env.get_template(template_name)

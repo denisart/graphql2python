@@ -8,11 +8,4 @@
 # release:          X.Y.Z
 # release fixes:    X.Y.Z.postN
 #
-MAJOR_VERSION = "0"
-MINOR_VERSION = "0"
-MICRO_VERSION = "6"
-
-
-__version__ = f"{MAJOR_VERSION}.{MINOR_VERSION}.{MICRO_VERSION}"
-# __version__ = f"{MAJOR_VERSION}.{MINOR_VERSION}.{MICRO_VERSION}rcN"
-# __version__ = f"{MAJOR_VERSION}.{MINOR_VERSION}.{MICRO_VERSION}.post1"
+__version__ = "0.0.6"

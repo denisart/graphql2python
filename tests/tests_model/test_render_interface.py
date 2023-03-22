@@ -9,10 +9,7 @@ render = DataModelRender()
 def test_render_interface_simple():
     """Test for render of simple GraphQL interface with aliases."""
 
-    field_aliases = {
-        'f1': FieldSetting(alias='f1_alias'),
-        'f3': FieldSetting(new_name='f3_new')
-    }
+    field_aliases = {'f1': FieldSetting(alias='f1_alias'), 'f3': FieldSetting(new_name='f3_new')}
 
     obj = GraphQLInterfaceType(
         'I',
@@ -41,10 +38,7 @@ def test_render_interface_simple():
 def test_render_interface_not_all_optional():
     """Test for render of simple GraphQL interface with optional_fields=False."""
 
-    field_aliases = {
-        'f1': FieldSetting(alias='f1_alias'),
-        'f3': FieldSetting(new_name='f3_new')
-    }
+    field_aliases = {'f1': FieldSetting(alias='f1_alias'), 'f3': FieldSetting(new_name='f3_new')}
 
     obj = GraphQLInterfaceType(
         'I',
@@ -111,11 +105,7 @@ def test_render_interface_inherit():
         fields={
             'f1': GraphQLField(GraphQLScalarType('String')),
         },
-        interfaces=[
-            GraphQLInterfaceType('I1', {}),
-            GraphQLInterfaceType('I2', {}),
-            GraphQLInterfaceType('I3', {})
-        ]
+        interfaces=[GraphQLInterfaceType('I1', {}), GraphQLInterfaceType('I2', {}), GraphQLInterfaceType('I3', {})],
     )
 
     result = '''class I(

@@ -3,8 +3,16 @@ from keyword import iskeyword
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
-from graphql import (GraphQLEnumType, GraphQLField, GraphQLInterfaceType, GraphQLObjectType, GraphQLScalarType,
-                     GraphQLUnionType, is_list_type, is_non_null_type)
+from graphql import (
+    GraphQLEnumType,
+    GraphQLField,
+    GraphQLInterfaceType,
+    GraphQLObjectType,
+    GraphQLScalarType,
+    GraphQLUnionType,
+    is_list_type,
+    is_non_null_type,
+)
 from jinja2 import Environment, FileSystemLoader, Template
 
 from graphql2python.model.config import FieldSetting
@@ -183,8 +191,7 @@ class DataModelRender:
 
         name = obj.name
         description = self.render_comment(
-            (obj.description or self.SCALAR_DEFAULT_DESCRIPTION).split("\n"),
-            max_line_len=self.max_line_len
+            (obj.description or self.SCALAR_DEFAULT_DESCRIPTION).split("\n"), max_line_len=self.max_line_len
         )
 
         return self._template_scalar.render(description=description, name=name, pytype=pytype)
@@ -199,9 +206,7 @@ class DataModelRender:
 
         name = obj.name
         docstring = self.render_docstring(
-            (obj.description or self.ENUM_DEFAULT_DESCRIPTION).split("\n"),
-            indent=4,
-            max_line_len=self.max_line_len
+            (obj.description or self.ENUM_DEFAULT_DESCRIPTION).split("\n"), indent=4, max_line_len=self.max_line_len
         )
 
         #
@@ -247,8 +252,7 @@ class DataModelRender:
 
         name = obj.name
         description = self.render_comment(
-            (obj.description or self.UNION_DEFAULT_DESCRIPTION).split('\n'),
-            max_line_len=self.max_line_len
+            (obj.description or self.UNION_DEFAULT_DESCRIPTION).split('\n'), max_line_len=self.max_line_len
         )
         types = [type_.name for type_ in obj.types]  # type: ignore
 
@@ -286,7 +290,6 @@ class DataModelRender:
         res_list: List[str] = []
 
         while is_list_type(obj) or is_non_null_type(obj):
-
             if is_list_type(obj):
                 if (prev_token is None) or (prev_token in ["L", "OL"]):
                     res_list.append("OL")
@@ -406,11 +409,9 @@ class DataModelRender:
         result = ""
 
         if field.description is not None:
-            result += self.render_comment(
-                field.description.split('\n'),
-                indent=4,
-                max_line_len=self.max_line_len
-            ) + "\n"
+            result += (
+                self.render_comment(field.description.split('\n'), indent=4, max_line_len=self.max_line_len) + "\n"
+            )
 
         result += f"    {field_name}{name_suffix}: "
 
@@ -431,15 +432,10 @@ class DataModelRender:
         """
 
         docstring = self.render_docstring(
-            indent=4,
-            lines=[obj.description or self.INTERFACE_DEFAULT_DESCRIPTION],
-            max_line_len=self.max_line_len
+            indent=4, lines=[obj.description or self.INTERFACE_DEFAULT_DESCRIPTION], max_line_len=self.max_line_len
         )
 
-        interfaces = [
-            int_name.name
-            for int_name in obj.interfaces  # type: ignore
-        ]
+        interfaces = [int_name.name for int_name in obj.interfaces]  # type: ignore
 
         parents = set()
 
@@ -483,10 +479,10 @@ class DataModelRender:
             )
 
         return self._template_interface.render(
-                docstring=docstring,
-                name=obj.name,
-                interfaces=interfaces,
-                fields=fields,
+            docstring=docstring,
+            name=obj.name,
+            interfaces=interfaces,
+            fields=fields,
         )
 
     def render_object(self, obj: GraphQLObjectType, field_aliases: Dict[str, FieldSetting]) -> str:
@@ -509,15 +505,10 @@ class DataModelRender:
         """
 
         docstring = self.render_docstring(
-            indent=4,
-            lines=[obj.description or self.OBJECT_DEFAULT_DESCRIPTION],
-            max_line_len=self.max_line_len
+            indent=4, lines=[obj.description or self.OBJECT_DEFAULT_DESCRIPTION], max_line_len=self.max_line_len
         )
 
-        interfaces = [
-            int_name.name
-            for int_name in obj.interfaces  # type: ignore
-        ]
+        interfaces = [int_name.name for int_name in obj.interfaces]  # type: ignore
 
         parents = set()
         for interface in obj.interfaces:  # type: ignore

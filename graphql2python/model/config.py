@@ -25,19 +25,14 @@ class GraphQL2PythonModelOptions(BaseModel):
     """Data-model render options."""
 
     scalar_pytypes: Dict[str, str] = Field(
-        description="A dict with python types for custom GraphQL scalars.",
-        default_factory=dict
+        description="A dict with python types for custom GraphQL scalars.", default_factory=dict
     )
     fields_setting: Dict[str, Dict[str, FieldSetting]] = Field(
-        description="Settings for interfaces or objects fields.",
-        default_factory=dict
+        description="Settings for interfaces or objects fields.", default_factory=dict
     )
     max_line_len: int = Field(default=120, description="Maximum of line length of output python file.")
     name_suffix: str = Field(default="_", description="A suffix for invalid field name (as python object name).")
-    each_field_optional: bool = Field(
-        default=False,
-        description="Each fields of interfaces and objects are optional."
-    )
+    each_field_optional: bool = Field(default=False, description="Each fields of interfaces and objects are optional.")
     add_from_dict: bool = Field(default=False, description="add from_dict method to the general class.")
     add_to_dict: bool = Field(default=False, description="add to_dict method to the general class.")
 

@@ -6,8 +6,6 @@ test: https://github.com/python/cpython/blob/3.10/Lib/test/test_graphlib.py
 
 """
 
-# pylint: skip-file
-
 __all__ = ["TopologicalSorter", "CycleError"]
 
 

@@ -12,14 +12,10 @@ render = DataModelRender()
         (
             GraphQLScalarType("ID"),
             "str",
-            "# A Scalar type\n# See https://graphql.org/learn/schema/#scalar-types\nID = str"
+            "# A Scalar type\n# See https://graphql.org/learn/schema/#scalar-types\nID = str",
         ),
-        (
-            GraphQLScalarType("ID", description="my description"),
-            "str",
-            "# my description\nID = str"
-        )
-    ]
+        (GraphQLScalarType("ID", description="my description"), "str", "# my description\nID = str"),
+    ],
 )
 def test_render_scalar(obj: GraphQLScalarType, pytype: str, result: str):
     """Tests for scalar render with some options."""

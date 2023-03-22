@@ -71,10 +71,7 @@ class GraphQLSchemaTypeMap:
         graph: Dict[str, Set[str]] = {}
 
         for object_name in self.type_map[SupportTypes.GraphQLInterfaceType]:
-            graph[object_name] = {
-                inter.name
-                for inter in schema.get_type(object_name).interfaces  # type: ignore
-            }
+            graph[object_name] = {inter.name for inter in schema.get_type(object_name).interfaces}  # type: ignore
 
         t_sort = TopologicalSorter(graph)
         self.type_map[SupportTypes.GraphQLInterfaceType] = list(t_sort.static_order())

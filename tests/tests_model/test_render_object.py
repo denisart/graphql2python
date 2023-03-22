@@ -110,11 +110,7 @@ def test_render_object_inherit():
         fields={
             'f1': GraphQLField(GraphQLScalarType('String')),
         },
-        interfaces=[
-            GraphQLInterfaceType('I1', {}),
-            GraphQLInterfaceType('I2', {}),
-            GraphQLInterfaceType('I3', {})
-        ]
+        interfaces=[GraphQLInterfaceType('I1', {}), GraphQLInterfaceType('I2', {}), GraphQLInterfaceType('I3', {})],
     )
 
     result = '''class O(
