@@ -329,7 +329,10 @@ def test_render_field_description():
         ),
         (
             'f', GraphQLField(type_=GraphQLList(GraphQLList(GraphQLScalarType('S')))),
-            "    f: _t.Optional[_t.List[_t.Optional[_t.List[_t.Optional['S']]]]] = Field(default_factory=list, alias='alias_f')"
+            (
+                "    f: _t.Optional[_t.List[_t.Optional[_t.List[_t.Optional['S']]]]] = "
+                "Field(default_factory=list, alias='alias_f')"
+            )
         ),
     ]
 )
