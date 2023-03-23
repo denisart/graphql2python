@@ -1,16 +1,20 @@
 from graphql import (
-    GraphQLScalarType,
-    GraphQLEnumValue,
     GraphQLEnumType,
-    GraphQLUnionType,
+    GraphQLEnumValue,
+    GraphQLField,
+    GraphQLNonNull,
     GraphQLObjectType,
+    GraphQLScalarType,
+    GraphQLUnionType
 )
 
 from graphql2python.type.definitions import (
-    GraphQL2PythonScalarType,
-    GraphQL2PythonEnumValue,
     GraphQL2PythonEnumType,
-    GraphQL2PythonUnionType,
+    GraphQL2PythonEnumValue,
+    GraphQL2PythonField,
+    GraphQL2PythonFieldSequenceItemType,
+    GraphQL2PythonScalarType,
+    GraphQL2PythonUnionType
 )
 
 
@@ -127,3 +131,31 @@ def test_union():
     assert union_graphq2python.name == "SearchResult"
     assert union_graphq2python.description == union_description
     assert union_graphq2python.types == ["Human", "Droid", "Starship"]
+
+
+def test_field():
+    """
+    type Character {
+      name: String!
+    }
+
+    """
+
+    name_graphql_core = GraphQLField(type_=GraphQLNonNull(GraphQLScalarType("String")))
+
+    character_graphql_core = GraphQLObjectType(
+        name="Character",
+        fields={"name": name_graphql_core}
+    )
+
+    name_graphql2python = GraphQL2PythonField(
+        graphql_core=name_graphql_core,
+        name="name",
+        field_object_name=character_graphql_core.name,
+        field_sequence=[GraphQL2PythonFieldSequenceItemType.OS]
+    )
+
+    assert name_graphql2python.graphql_core == name_graphql_core
+    assert name_graphql2python.name == "name"
+    assert name_graphql2python.field_object_name == "Character"
+    assert name_graphql2python.field_sequence == [GraphQL2PythonFieldSequenceItemType.OS]
