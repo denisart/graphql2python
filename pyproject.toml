@@ -61,6 +61,7 @@ dev = [
     "wheel",
     "black",
     "types-pyyaml",
+    "isort",
 ]
 
 # all requirements for tests
