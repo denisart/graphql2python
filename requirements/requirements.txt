@@ -12,7 +12,7 @@ jinja2==3.1.2
     # via graphql2python (pyproject.toml)
 markupsafe==2.1.2
     # via jinja2
-pydantic==1.10.6
+pydantic==1.10.7
     # via graphql2python (pyproject.toml)
 pyyaml==6.0
     # via graphql2python (pyproject.toml)

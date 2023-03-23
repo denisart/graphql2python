@@ -40,7 +40,7 @@ packaging==23.0
     # via sphinx
 pycparser==2.21
     # via cffi
-pydantic==1.10.6
+pydantic==1.10.7
     # via graphql2python (pyproject.toml)
 pygments==2.14.0
     # via sphinx

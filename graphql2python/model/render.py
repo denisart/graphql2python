@@ -11,7 +11,7 @@ from graphql import (
     GraphQLScalarType,
     GraphQLUnionType,
     is_list_type,
-    is_non_null_type,
+    is_non_null_type
 )
 from jinja2 import Environment, FileSystemLoader, Template
 

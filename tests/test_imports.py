@@ -1,21 +1,21 @@
 import pytest
 
 from graphql2python.imports import (
-    Import,
-    Imports,
     IMPORT_ANNOTATED,
     IMPORT_ANY,
-    IMPORT_LIST,
-    IMPORT_UNION,
-    IMPORT_OPTIONAL,
-    IMPORT_LITERAL,
-    IMPORT_ENUM,
-    IMPORT_DICT,
-    IMPORT_DECIMAL,
     IMPORT_DATE,
     IMPORT_DATETIME,
+    IMPORT_DECIMAL,
+    IMPORT_DICT,
+    IMPORT_ENUM,
+    IMPORT_LIST,
+    IMPORT_LITERAL,
+    IMPORT_OPTIONAL,
     IMPORT_TIME,
+    IMPORT_UNION,
     IMPORT_UUID,
+    Import,
+    Imports
 )
 
 
