@@ -1,8 +1,8 @@
 from .definitions import (
-    GraphQL2PythonScalarType,
-    GraphQL2PythonEnumValue,
     GraphQL2PythonEnumType,
-    GraphQL2PythonUnionType,
+    GraphQL2PythonEnumValue,
+    GraphQL2PythonScalarType,
+    GraphQL2PythonUnionType
 )
 
 __all__ = [

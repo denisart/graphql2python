@@ -18,11 +18,13 @@ requirements-build:
 
 .PHONY: format
 format:
+	isort $(sources)
 	black $(sources)
 	ruff --fix $(sources)
 
 .PHONY: lint
 lint:
+	isort $(sources) --check
 	ruff $(sources)
 	black $(sources) --check --diff
 

@@ -78,6 +78,11 @@ docs = [
     "sphinxcontrib-github",
 ]
 
+[tool.isort]
+py_version=310
+multi_line_output = 3
+line_length = 120
+
 [tool.ruff]
 line-length = 120
 flake8-quotes = {inline-quotes = 'single', multiline-quotes = 'double'}

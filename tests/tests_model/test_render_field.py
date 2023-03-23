@@ -7,7 +7,7 @@ from graphql import (
     GraphQLNonNull,
     GraphQLObjectType,
     GraphQLScalarType,
-    GraphQLUnionType,
+    GraphQLUnionType
 )
 
 from graphql2python.model.render import DataModelRender
