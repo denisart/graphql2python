@@ -5,6 +5,10 @@
 [![last-commit](https://img.shields.io/github/last-commit/denisart/graphql2python/master)](https://github.com/denisart/graphql2python)
 [![license](https://img.shields.io/github/license/denisart/graphql2python)](https://github.com/denisart/graphql2python/blob/master/LICENSE)
 
+---
+**NOTE.** Please use the package [datamodel-code-generator](https://github.com/koxudaxi/datamodel-code-generator) to generate data model from a GraphQL schema.
+---
+
 **graphql2python** is a tool that generates python code out of your GraphQL schema.
 If you are using python as GraphQL client you can to generate
 pydantic data-model with **graphql2python**. The documentation for **graphql2python**
